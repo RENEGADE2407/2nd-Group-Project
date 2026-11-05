@@ -51,7 +51,7 @@ class DepartmentTree
       void Search4Department(const string& name) const;
 
 
-      //Puts department hierarchy on deisplay 
+      //Puts department hierarchy on display 
       void DisplayHierarchy() const;
 
 
