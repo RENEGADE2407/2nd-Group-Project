@@ -1,5 +1,6 @@
 // Purpose: Undirected, unweighted campus graph (buildings = vertices,
 //          walkways = edges) stored as an adjacency list, plus BFS reachability.
+// Author: Drake Thompson
 #ifndef CAMPUS_GRAPH_H
 #define CAMPUS_GRAPH_H
 
