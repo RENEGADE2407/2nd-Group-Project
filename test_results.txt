@@ -6,7 +6,7 @@ Format: Test # | Description | Input | Expected | Actual | Pass/Fail
 
 Environment
   Tested on (Member B): Windows, g++ (MinGW), command prompt
-  Build: g++ -std=c++11 -Wall -Wextra -Iinclude src/CampusGraph.cpp tests/graph_demo.cpp -o graph_demo
+  Build: g++ -std=c++11 -Wall -Wextra -Iinclude src/CampusGraph.cpp testdata/graph_demo.cpp -o graph_demo
   UNT CSE CELL: [ ] NOT YET RUN - fill in date, compiler version, and result
 
 ==============================================================================
