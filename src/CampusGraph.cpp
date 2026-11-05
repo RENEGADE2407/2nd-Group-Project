@@ -1,5 +1,6 @@
 // Purpose: Implementation of the undirected campus graph (adjacency list),
 //          its file loaders, display functions, and BFS reachability.
+// Author: Drake Thompson
 #include "CampusGraph.h"
 #include "Utils.h"
 
