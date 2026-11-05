@@ -1,0 +1,11 @@
+Library|Student Union
+student union|LIBRARY
+Library|Library
+Library|Nowhere
+Ghost|Gym
+Gym
+Gym|Library|Extra
+ |Gym
+Student Union|Gym
+Gym|Room #5 Hall
+# done

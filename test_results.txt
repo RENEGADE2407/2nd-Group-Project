@@ -1,0 +1,195 @@
+==============================================================================
+TEST RESULTS - Smart Campus Navigation and Facility Analytics System
+Milestone 1
+==============================================================================
+Format: Test # | Description | Input | Expected | Actual | Pass/Fail
+
+Environment
+  Tested on (Member B): Windows, g++ (MinGW), command prompt
+  Build: g++ -std=c++11 -Wall -Wextra -Iinclude src/CampusGraph.cpp testdata/graph_demo.cpp -o graph_demo
+  UNT CSE CELL: [ ] NOT YET RUN - fill in date, compiler version, and result
+
+==============================================================================
+SECTION B: CAMPUS GRAPH, BFS, AND BUILDINGS/CONNECTIONS LOADING (Member B)
+==============================================================================
+
+B-01 | Sample files load
+  Input:    graph_demo   (default data/ directory)
+  Expected: buildings.txt: 7 accepted, 0 rejected
+            connections.txt: 6 accepted, 0 rejected
+  Actual:   buildings.txt: 7 accepted, 0 rejected
+            connections.txt: 6 accepted, 0 rejected
+  Result:   PASS
+
+B-02 | Graph display: insertion order, neighbor order, isolated building
+  Input:    graph_demo (display runs after loading)
+  Expected: Buildings in file order; neighbors in connection order;
+            Observatory shows "(no connections)"
+  Actual:   Library -> Student Union, Business Building
+            Student Union -> Library, Science Building, Gym
+            Science Building -> Student Union, Engineering Building
+            Engineering Building -> Science Building
+            Business Building -> Library, Gym
+            Gym -> Student Union, Business Building
+            Observatory -> (no connections)
+  Result:   PASS
+
+B-03 | Counts and degrees
+  Input:    graph_demo (counts display runs after loading)
+  Expected: Total buildings 7, total connections 6 (each counted once);
+            degrees Library 2, Student Union 3, Science Building 2,
+            Engineering Building 1, Business Building 2, Gym 2, Observatory 0
+  Actual:   Total buildings: 7 / Total connections: 6
+            Library 2, Student Union 3, Science Building 2,
+            Engineering Building 1, Business Building 2, Gym 2, Observatory 0
+  Result:   PASS
+
+B-04 | BFS from a connected building
+  Input:    BFS start = Library
+  Expected: Library 0, Student Union 1, Business Building 1,
+            Science Building 2, Gym 2, Engineering Building 3;
+            Reachable: 6 of 7 buildings
+  Actual:   Same order and distances as expected;
+            Reachable: 6 of 7 buildings
+  Result:   PASS
+
+B-05 | BFS from an isolated building
+  Input:    BFS start = Observatory
+  Expected: Observatory (distance 0) only; Reachable: 1 of 7 buildings
+  Actual:   Observatory (distance 0); Reachable: 1 of 7 buildings
+  Result:   PASS
+
+B-06 | BFS with an unknown start building
+  Input:    BFS start = Nowhere
+  Expected: Error naming the unknown building; return to prompt
+  Actual:   Error: unknown building 'Nowhere'. (prompt returned)
+  Result:   PASS
+
+B-07 | BFS start ignores capitalization and outer whitespace
+  Input:    BFS start = "   library"
+  Expected: Same result as B-04
+  Actual:   Same result as B-04 (Library, 6 of 7)
+  Result:   PASS
+
+B-08 | Graph with multiple connected components
+  Input:    sample data; BFS from Library and from Observatory (B-04, B-05)
+  Expected: Two components: six buildings reach each other, Observatory alone
+  Actual:   Library reaches 6 of 7; Observatory reaches 1 of 7
+  Result:   PASS
+
+B-09 | Invalid records, blank lines, comment lines (extra whitespace)
+  Input:    graph_demo testdata/graph_edge_cases
+  Expected: Blank and comment lines skipped silently; wrong-field-count
+            records rejected with filename, line number, and reason;
+            whitespace around names trimmed
+  Actual:   buildings.txt line 9: wrong field count (expected 1, found 2)
+            connections.txt line 6: wrong field count (expected 2, found 1)
+            connections.txt line 7: wrong field count (expected 2, found 3)
+            No warnings for blank/comment lines; "  Student Union  " loaded
+            as "Student Union"
+  Result:   PASS
+
+B-10 | Duplicate building names that differ only by capitalization
+  Input:    graph_demo testdata/graph_edge_cases ("library" after "Library")
+  Expected: Later duplicate rejected; first spelling kept
+  Actual:   Warning: buildings.txt line 5: duplicate building name 'library'
+            Graph displays "Library"
+  Result:   PASS
+
+B-11 | Unknown building references in connections
+  Input:    graph_demo testdata/graph_edge_cases
+  Expected: Rejected, with the unknown building identified
+  Actual:   Warning: connections.txt line 4: unknown building 'Nowhere'
+            Warning: connections.txt line 5: unknown building 'Ghost'
+  Result:   PASS
+
+B-12 | Duplicate and reversed duplicate connections
+  Input:    graph_demo testdata/graph_edge_cases
+            (line 1: Library|Student Union, line 2: student union|LIBRARY)
+  Expected: Reversed duplicate rejected; connection counted once
+  Actual:   Warning: connections.txt line 2: duplicate connection between
+            'Student Union' and 'Library'
+            connections.txt: 3 accepted, 7 rejected; Total connections: 3
+  Result:   PASS
+
+B-13 | Missing files
+  Input:    graph_demo nonexistent
+  Expected: Error naming each file; treated as empty; no crash
+  Actual:   Error: cannot open buildings.txt (treating it as empty)
+            buildings.txt: 0 accepted, 0 rejected
+            Error: cannot open connections.txt (treating it as empty)
+            connections.txt: 0 accepted, 0 rejected
+  Result:   PASS
+
+B-14 | Empty graph display (no buildings loaded)
+  Input:    graph_demo nonexistent (graph display and counts)
+  Expected: Clear empty message; zero totals; no crash
+  Actual:   No buildings are loaded. / No buildings are loaded.
+            Total buildings: 0 / Total connections: 0
+  Result:   PASS
+
+
+------------------------------------------------------------------------------
+PENDING (need the team main.cpp / menu)
+------------------------------------------------------------------------------
+
+B-15 | BFS blank name through the menu
+  Input:    Menu option 5, press Enter with no text
+  Expected: Error message; return to menu
+  Actual:   [ ] not yet run
+  Result:   [ ]
+
+B-16 | Building name with spaces through the menu
+  Input:    Menu option 5, enter: Student Union
+  Expected: BFS runs from Student Union (distance 0); 6 of 7
+  Actual:   [ ] not yet run
+  Result:   [ ]
+
+B-17 | Repeated operations after errors (via menu)
+  Input:    Enter an unknown building, then run option 4, then option 5 again
+  Expected: Menu keeps working after each error
+  Actual:   [ ] not yet run
+  Result:   [ ]
+
+
+==============================================================================
+SECTION A: FACILITIES, HASH TABLE, ID SEARCH (Member A)
+==============================================================================
+Required M1 tests (Section 10)
+  - Valid facility records, blank lines, comment lines, too few/many fields
+  - Duplicate facility IDs that differ only by capitalization
+  - Unknown building reference in facilities.txt
+  - Successful ID search, lowercase ID search (f004), invalid-format ID (004),
+    and not-found ID (F999)
+  - At least one hash collision using your own testdata/ folder, with the
+    HASH-7 diagnostic output (capacity, entries, collisions)
+  - A duplicate-key insertion attempt, confirming it does NOT change the
+    collision count
+  - View all facilities (file order, total shown, and the empty case)
+
+==============================================================================
+SECTION C: DEPARTMENT TREE (Member C)
+==============================================================================
+Required M1 tests:
+  - Unknown department parent rejected when loading departments.txt
+  - Empty tree: adding the first department makes it the root with NO
+    parent prompt
+  - Root-only tree
+  - Search for the root (parent shown as None), a non-root, and a missing
+    department
+  - Add a department with an unknown parent, and add a duplicate name
+    (tree stays unchanged)
+  - Preorder traversal and the indented hierarchy (four spaces per depth)
+  - Duplicate department names that differ only by capitalization
+
+==============================================================================
+SECTION S: SHARED - MENU AND INPUT HANDLING (whole team)
+==============================================================================
+Required M1 tests:
+  - Invalid menu input: blank, letters, out-of-range number
+  - Text typed at a numeric prompt (program recovers, does not loop forever)
+  - Names containing spaces at every name prompt
+  - Blank names at every name prompt (error, return to menu)
+  - Repeated operations after errors (menu keeps working)
+  - Option 0 exits cleanly
+  - Menu numbers match Section 6.9 exactly (M1 menu)
