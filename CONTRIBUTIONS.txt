@@ -1,0 +1,49 @@
+==============================================================================
+CONTRIBUTIONS - Smart Campus Navigation and Facility Analytics System
+Milestone 1
+==============================================================================
+
+Team members (all are collaborators on the GitHub repository):
+
+  Member A: [Full name]   GitHub: [username]
+  Member B: [Drake Thompson]   GitHub: [draket321]
+  Member C: [Full name]   GitHub: [username]
+
+------------------------------------------------------------------------------
+Modules owned
+------------------------------------------------------------------------------
+
+Member A - Facilities and hash table
+  - Facility records and loading facilities.txt
+  - Custom hash table (hash function, collision handling, diagnostic)
+  - Facility ID search and "view all facilities"
+  [Member A: confirm file names and details]
+
+Member B - Campus graph and BFS
+  - include/CampusGraph.h, src/CampusGraph.cpp
+      * Undirected graph stored as an adjacency list
+      * Loading buildings.txt and connections.txt, with validation, warnings
+        (filename, line number, reason), and load summaries
+      * Graph display, building/connection counts, and degrees
+      * BFS reachability (queue plus visited marked at enqueue)
+  - include/Utils.h: shared string helpers (trim, case-insensitive compare,
+    comment detection, field splitting) used by the team
+  - Own test data: testdata/graph_edge_cases/
+  - Own tests: Section B of test_results.txt; testdata/graph_demo.cpp
+    (standalone test)
+
+Member C - Department tree
+  - Department tree and loading departments.txt
+  - Add department, search department, hierarchy display, preorder traversal
+  [Member C: confirm file names and details]
+
+------------------------------------------------------------------------------
+Shared work
+------------------------------------------------------------------------------
+
+  - Menu and main.cpp (initialization, file-loading order, menu loop)
+  - Input handling for menu and prompts
+  - README.txt, design_document.txt, test_results.txt, CONTRIBUTIONS.txt
+  - .gitignore and repository setup
+  - Compiling and testing on the UNT CSE CELL machines
+  [Fill in who did which parts]
