@@ -51,13 +51,13 @@ class DepartmentTree
       void Search4Department(const string& name) const;
 
 
-      //Puts department hierarchy on display 
+      //Puts department hierarchy on display in preorder with indentation
       void DisplayHierarchy() const;
 
 
 
 
-      //Performs/Displays preorder traversal 
+      //Performs/Displays preorder traversal no indentation
       void PreorderTraversal() const;
 
 };
