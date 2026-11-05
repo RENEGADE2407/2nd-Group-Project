@@ -497,3 +497,65 @@ void DepartmentTree::DisplayHierarchy() const
 }
 
 //_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//this will traverse and display in preorder without indentation
+void DepartmentTree::Preorder(DepartmentNode* node) const
+{
+    //first check if node exists
+  if(node == nullptr)
+  {
+    return;
+  }
+
+
+
+  //this will display departments name without indentation
+  cout << node->name << endl;
+
+  //this will visit each child recursively in preorder
+  for(size_t i = 0; i < node->children.size(); ++i)
+    {
+      Preorder(node->children[i]);
+      
+    }
+
+  
+}
+
+
+//overloaded function that will start the process of the display/traversal
+void DepartmentTree::PreorderTraversal() const
+{
+  //this checks if tree is empty
+  if(root == nullptr)
+  {
+    cout << "Department tree is empty." << endl;
+    return;
+  }
+
+  //this calls the actual function to begin displaying the hierarchy in preorder
+  Preorder(root);
+
+  
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
