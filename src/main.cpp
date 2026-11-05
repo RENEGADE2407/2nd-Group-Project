@@ -2,28 +2,47 @@
 #include <string>
 #include "../include/DepartmentTree.h"
 //FILL IN HERE: include facilities and hashtable headers
-//FILL IN HERE: include campus graph header
+#include "../include/CampusGraph.h"
+#include "../include/Utils.h" // String functions
 
 using namespace std;
+
+// Handler for BFS menu
+// Reads one full line (spaces allowed), trims it, rejects blank, then calls the graph.
+void handleBfsReachability(const CampusGraph& graph) {
+  cout << "Enter starting building: ";
+  string name;
+  getline(cin, name);
+  name = Utils::trim(name);
+  if (name.empty()) {
+      cout << "Error: building name cannot be blank.\n";
+      return;
+  }
+  graph.bfsReachable(name);   // prints its own error if the building is unknown
+}
 
 int main()
 {
   //this will initialize the department tree
   DepartmentTree departmentTree;
 
-  //FILL IN HERE: intitialize facilities, hash table, and campus graph 
+  //FILL IN HERE: intitialize facilities, hash table, and campus graph
+  string dataDir = (argc > 1) ? argv[1] : "data";   // default data directory
+  CampusGraph graph; // Initialize graph
+  
 
   
   //FILES MUST BE LOADED IN THIS ORDER
   //FILL IN HERE: 1. load the buildings.txt
+  graph.loadBuildings(dataDir);
 
   //FILL IN HERE: 2. load the connections.txt
+  graph.loadConnections(dataDir);
 
   //FILL IN HERE: 3. load the facilities.txt
   
   //this will call the load function and load the department info from the data file
   departmentTree.LoadDepartments("data/departments.txt");
-
 
   //this is the menu selection variable
   int menuChoice = 0;
@@ -79,20 +98,20 @@ int main()
 
           case 3: 
             {
-          //FILL IN HERE: display campus graph
-          break;
+              graph.displayGraph(); // View campus graph
+              break;
             }
 
           case 4: 
             {
-          //FILL IN HERE: display graph counts and degrees
-          break;
+              graph.displayCountsAndDegrees(); // Display graph counts and degrees
+              break;
             }
 
           case 5:
             {
-          //FILL IN HERE: implement bfs reachable buildings
-          break;
+              handleBfsReachability(graph); // Find reachable buildings (BFS)
+              break;
             }
 
           case 6:
