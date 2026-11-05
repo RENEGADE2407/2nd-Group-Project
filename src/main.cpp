@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "DepartmentTree.h"
+#include "../include/DepartmentTree.h"
 //FILL IN HERE: include facilities and hashtable headers
 //FILL IN HERE: include campus graph header
 

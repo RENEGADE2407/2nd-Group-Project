@@ -1,7 +1,7 @@
 #ifndef DEPARTMENTTREE_H
 #define DEPARTMENTTREE_H
 
-#include "DepartmentNode.h"
+#include "../include/DepartmentNode.h"
 #include <string>
 using namespace std;
 
