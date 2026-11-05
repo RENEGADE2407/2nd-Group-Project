@@ -1,4 +1,5 @@
 // Purpose: Standalone file to test the graph without main.cpp.
+// Author: Drake Thompson
 #include "CampusGraph.h"
 #include "Utils.h"
 #include <iostream>
