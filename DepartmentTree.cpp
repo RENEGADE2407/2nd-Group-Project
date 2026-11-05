@@ -6,7 +6,14 @@
 
 using namespace std;
 
-/* this file will implement the department tree class*/
+/* 
+Description: This file will implement the department tree class
+Author: Jason Wildman
+*/
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
 
 //this will remove the whitespace from the beginning and end of a string
 string RemoveWhiteSpace(const string& text)
@@ -46,7 +53,7 @@ string LowercaseName(const string& name)
 
 }
 
-
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 //Constructor
@@ -56,12 +63,17 @@ DepartmentTree::DepartmentTree()
   root = nullptr;
 }
 
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
 //destructor
 //deletes dynamically allocated memory
 DepartmentTree::~DepartmentTree()
 {
   DeleteTree(root);
 }
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 //free allocated memory
@@ -84,6 +96,8 @@ void DepartmentTree::DeleteTree(DepartmentNode* node)
 
 }
 
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
 
 //this shall search the tree for a particular department based on the name of the department
 DepartmentNode* DepartmentTree::FindDepartment(const string& name) const
@@ -122,6 +136,7 @@ DepartmentNode* DepartmentTree::FindDepartment(const string& name) const
 
 }
 
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 //this will load the file passed to the function attempt to open it and then read the file
@@ -298,6 +313,7 @@ bool DepartmentTree::LoadDepartments(const string& filename)
 }
 
 
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 //This will allow the user to add departments manually instead of loading them from the .txt file
@@ -371,10 +387,113 @@ bool DepartmentTree::AddDepartment(const string& name, const string& parentName)
 
   return true;
   
+}
 
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function will get the depth of a node in the tree
+int DepartmentTree::GetDepth(DepartmentNode* node) const
+{
+  //this will track the departments depth
+  int depth = 0;
+
+  //this will traverse the tree upward through the parents until it reaches the root
+  while(node != root)
+    {
+      node = node->parent;
+
+      ++depth;
+        
+    }
+  return depth;
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function will use the FindDepartment and GetDepth functions to search for a department and display relative info
+void DepartmentTree::Search4Department(const string& name) const
+{
+  //starts by removing whitespace
+  string departmentName = RemoveWhiteSpace(name);
+
+  //then call the find department funct and make store it in a pointer for later use
+  DepartmentNode* departmentPointer = FindDepartment(departmentName);
+
+  //this will then check to ensure that the department actually exists. If it doesnt display warning mssg
+  if(departmentPointer == nullptr)
+  {
+    cout << "WARNING: " << departmentName << " department not found." << endl;
+    return;
+  }
+
+  //now that the existence of the department is determined begin displaying the department's info
+  cout << "----Department found----" << endl;
+  cout << "Department Name: " << departmentPointer->name << endl;
+
+  //this will check if there is a root before displaying the parent node
+  if(departmentPointer->parent != nullptr)
+  {
+    cout << "Parent Department: " << departmentPointer->parent->name << endl;
+  }
+  else
+  {
+    cout << "Parent Department: None, " << departmentPointer->name << " is the root node." << endl;
+  }
+
+  cout << "Direct-child/children: " << departmentPointer->children.size() << endl;
+
+  cout << "Depth: " << GetDepth(departmentPointer) << endl;
+
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//this function will handle the traversal and the display for the hierarchy in preorder
+void DepartmentTree::DisplayHierarchy(DepartmentNode* node, int depth) const
+{
+  //first check if node exists
+  if(node == nullptr)
+  {
+    return;
+  }
+
+  //this will use the depth and a loop to indent the department based on the depth
+  for(int i = 0; i < depth; ++i)
+    {
+      cout << "    ";
+    }
+
+  //once properly indented this will display the departments name
+  cout << node->name << endl;
+
+  //this will visit each child recursively in preorder
+  for(size_t i = 0; i < node->children.size(); ++i)
+    {
+      DisplayHierarchy(node->children[i], depth + 1);
+      
+    }
 
   
 }
 
+//overloaded function
+//this is the public function that will start the process of the display
+void DepartmentTree::DisplayHierarchy() const
+{
+  //this checks if tree is empty
+  if(root == nullptr)
+  {
+    cout << "Department tree is empty." << endl;
+    return;
+  }
 
+  //this calls the actual function to begin displaying the hierarchy in preorder
+  DisplayHierarchy(root, 0);
 
+  
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
