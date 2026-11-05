@@ -21,12 +21,12 @@ void handleBfsReachability(const CampusGraph& graph) {
   graph.bfsReachable(name);   // prints its own error if the building is unknown
 }
 
-int main()
+int main(int argc, char* argv[])
 {
   //this will initialize the department tree
   DepartmentTree departmentTree;
 
-  //FILL IN HERE: intitialize facilities, hash table, and campus graph
+  //FILL IN HERE: intitialize facilities, hash table
   string dataDir = (argc > 1) ? argv[1] : "data";   // default data directory
   CampusGraph graph; // Initialize graph
   
