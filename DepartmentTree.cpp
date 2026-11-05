@@ -298,3 +298,83 @@ bool DepartmentTree::LoadDepartments(const string& filename)
 }
 
 
+
+
+//This will allow the user to add departments manually instead of loading them from the .txt file
+bool DepartmentTree::AddDepartment(const string& name, const string& parentName)
+{
+
+  //this removes the whitespace from the dpartment name
+  string departmentName = RemoveWhiteSpace(name);
+
+
+  //checks if the department name is empty 
+  if(departmentName.empty())
+  {
+    cout << "WARNING: Department name empty." << endl;
+    return false;
+  }
+
+  // calls the find function to check for duplicate names
+  if(FindDepartment(departmentName) != nullptr)
+  {
+    cout << "WARNING: There is already a department named: " << departmentName << "." << endl;
+    return false;
+  }
+
+
+  //this will check if the tree is empty, if it is this will make the added department the root
+  if(root == nullptr)
+  {
+    //this makes the department added the root
+    root = new DepartmentNode(departmentName);
+
+    cout << departmentName << " has been added as the root node." << endl;
+    return true;
+  }
+
+
+  //if there is already a root then a parent is needed from the user
+
+  //this will clear the parent name of whitespace
+  string parentNoWhiteSpace = RemoveWhiteSpace(parentName);
+
+  //this will check if parent blank display warning if it is
+  if(parentNoWhiteSpace.empty())
+  {
+    cout << "WARNING: The department tree's root has already been filled, therefore parent department must be specified" << endl;
+    return false;
+  }
+
+
+  //if check passes then this will search the tree to confirm the parent department actually exists
+  if(FindDepartment(parentNoWhiteSpace) == nullptr)
+  {
+    cout << "WARNING: Parent department not found in department tree." << endl;
+    return false;
+  }
+
+
+  //this creates a new department node 
+  DepartmentNode* newDepartment = new DepartmentNode(departmentName);
+
+
+  //This assigns the new department with its parent
+  newDepartment->parent = FindDepartment(parentNoWhiteSpace);
+
+  //this will add the new department to the parents child vector
+  newDepartment->parent->children.push_back(newDepartment);
+
+
+  //this will inform the user of a successful addition to the tree (another happy landing)
+  cout << departmentName << " has been successfully added to the department tree." << endl;
+
+  return true;
+  
+
+
+  
+}
+
+
+
