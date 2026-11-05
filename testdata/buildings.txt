@@ -1,0 +1,11 @@
+# comment
+Library
+
+  Student Union  
+library
+Gym
+   # indented comment
+Room #5 Hall
+A|B
+Science Building
+Island
