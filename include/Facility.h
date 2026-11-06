@@ -7,4 +7,13 @@
 
 class Facility {
 public:
-    
+    string id; // Uppercase ID
+    string name; // Facility name
+    string building; // Building name
+    string category; // Category
+
+    // Returns ID, name, building, and category for printing
+    string toString() const;
+};
+
+#endif
