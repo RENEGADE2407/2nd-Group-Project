@@ -87,4 +87,30 @@ const Facility* HashTable::find(string id) const {
     return NULL;
 }
 
+// This prints each bucket number and the IDs stored in it
+void HashTable::printBuckets() const {
+    cout << "Hash table: capacity " << capacity << ", entries " << entries
+         << ", collisions " << collisions << endl;
+    for (int i = 0; i < capacity; i++) {
+        cout << "  [" << i << "] ";
+        if (buckets[i] == NULL) {
+            cout << "(empty)";
+        }
+        HashNode* current = buckets[i];
+        while (current != NULL) {
+            cout << current->data.id;
+            if (current->next != NULL) {
+                cout << " -> ";
+            }
+            current = current->next;
+        }
+        cout << endl;
+    }
+}
+
+
+
+
+
+
 
