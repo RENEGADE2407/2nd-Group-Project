@@ -5,3 +5,15 @@
 #include <fstream>
 #include <iostream>
 using namespace std;
+
+static bool isValidFacilityId(string id) {
+    if (id.size() != 4 || id[0] != 'F') {
+        return false;
+    }
+    for (int i = 1; i < 4; i++) {
+        if (id[i] < '0' || id[i] > '9') {
+            return false;
+        }
+    }
+    return true;
+}
