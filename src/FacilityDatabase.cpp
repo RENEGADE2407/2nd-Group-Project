@@ -6,6 +6,7 @@
 #include <iostream>
 using namespace std;
 
+// Facility ID validation function
 static bool isValidFacilityId(string id) {
     if (id.size() != 4 || id[0] != 'F') {
         return false;
