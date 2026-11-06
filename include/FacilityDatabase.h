@@ -16,4 +16,22 @@ public:
     void loadfromFile(string path, string fileLabel, const vector<string>& buldingNames);
 
     // This prints all facilities in file order and the total
+    void displayAll() const;
+
+    // This searches by ID using the hash table and prints the result
     void searchByID(string id) const;
+
+    int getAccepted() const { return accepted; }
+    int getRejected() const { return rejected; }
+    const HashTable& getTable() const { return table; }
+
+private:
+    vector<Facility> facilities; // this accepts facilities in file order
+    HashTable table;
+    int accepted;
+    int rejected;
+};
+
+#endif
+
+    
