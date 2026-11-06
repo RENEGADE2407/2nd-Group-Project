@@ -122,11 +122,20 @@ int main(int argc, char* argv[])
               cout << "Enter department name: ";
               getline(cin, departmentName);
 
-              cout << "Enter parent name (leave blank if tree is empty): ";
-              getline(cin, parentName);
+              if(departmentTree.IsEmpty())
+              {
+                 //Add the first department as root
+                departmentTree.AddDepartment(departmentName);
+              }
+              
+              else
+              {
+                cout << "Enter parent name: ";
+                getline(cin, parentName);
 
-              //call the manual add department function
-              departmentTree.AddDepartment(departmentName, parentName);
+                //Add department under specified parent
+                departmentTree.AddDepartment(departmentName, parentName);
+              }
 
               break;
             }
