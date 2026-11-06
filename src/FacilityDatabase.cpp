@@ -18,3 +18,9 @@ static bool isValidFacilityId(string id) {
     }
     return true;
 }
+
+// This prints a warning with the file name, line number and reason
+static void printWarning(string file, int lineNumber, string reason) {
+    cout << "Warning: " << file << " line " << lineNumber
+         << ": rejected - " << reason << endl;
+}
