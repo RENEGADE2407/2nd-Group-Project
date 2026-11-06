@@ -24,3 +24,18 @@ static void printWarning(string file, int lineNumber, string reason) {
     cout << "Warning: " << file << " line " << lineNumber
          << ": rejected - " << reason << endl;
 }
+
+// this looks for the name in the building list without capitalization and returns the spelling from the list
+static string findBuilding(const vector<string>& buildingNames, string name) {
+    for (int i = 0; i < (int)buildingNames.size(); i++) {
+        if (Utils::equalsIgnoreCase(buildingNames[i], name)) {
+            return buildingNames[i];
+        }
+    }
+    return "";
+}
+
+FacilityDatabase::FacilityDatabase() {
+    accepted = 0;
+    rejected = 0;
+}
