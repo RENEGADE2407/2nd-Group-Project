@@ -9,4 +9,11 @@
 #include "HashTable.h"
 using namespace std;
 
+class FacilityDatabase {
+public:
+    FacilityDatabase();
+    // This loads the facilities file and buildingnames is the list of accepted building names from buildings.txt
+    void loadfromFile(string path, string fileLabel, const vector<string>& buldingNames);
 
+    // This prints all facilities in file order and the total
+    void searchByID(string id) const;
