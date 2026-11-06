@@ -5,6 +5,19 @@
 #include <iostream>
 using namespace std;
 
+// Creates capacity empty buckets
+HashTable::HashTable(int cap) {
+    if (cap < 1) {
+        cap = 1;
+    }
+    capacity = cap;
+    entries = 0;
+    collisions = 0;
+    for (int i = 0; i < capacity; i++) {
+        buckets.push_back(NULL);
+    }
+}
+
 // This deletes every node in every bucket
 HashTable::~HashTable() {
     for (int i = 0; i < capacity; i++) {
@@ -16,3 +29,4 @@ HashTable::~HashTable() {
         }
     }
 }
+
