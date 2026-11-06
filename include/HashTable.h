@@ -34,4 +34,17 @@ public:
     int getEntries() const { return entries; }
     int getCollisions() const { return collisions; }
 
+    // this prints what is stored in every bucket
+    void printBucket() const;
 
+private:
+    HashTable(const HashTable& other);
+    HashTable& operator= (const HashTable& other);
+
+    vector<HashNode*> buckets; // first node of each bucket
+    int capacity; // number of buckets
+    int entries; // number of facilities stored
+    int collisions; // goes into a bucket that was not empty
+};
+
+#endif
