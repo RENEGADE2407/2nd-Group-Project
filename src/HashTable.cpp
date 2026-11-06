@@ -30,3 +30,12 @@ HashTable::~HashTable() {
     }
 }
 
+// Hash function
+int HashTable::hashFunction(string id) const {
+    long h = 0;
+    for (int i = 0; i < (int)id.size(); i++) {
+        h = (h * 31 + (unsigned char)id[i]) % capacity;
+    }
+    return (int)h;
+}
+
