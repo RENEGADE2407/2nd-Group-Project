@@ -21,4 +21,17 @@ public:
     HashTable(int capacity = DEFAULT_CAPACITY);
     ~HashTable();
 
-    
+    // This adds a facility and resturns falseif the ID is already used
+    bool insert(const Facility& f);
+
+    // This finds a facility by ID and returns a pointer to it or null if not found
+    const Facility* find(string id) const;
+
+    // This turns an uppercase ID into a bucket number from 0 to capacity-1
+    int hashFunction(string id) const;
+
+    int getCapacity() const { return capacity; }
+    int getEntries() const { return entries; }
+    int getCollisions() const { return collisions; }
+
+
