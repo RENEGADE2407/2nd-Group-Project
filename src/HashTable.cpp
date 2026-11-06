@@ -74,4 +74,17 @@ bool HashTable::insert(const Facility& f) {
     return true;
 }
 
+// This makes the ID uppercase, goes into the bucket and searches only that list
+const Facility* HashTable::find(string id) const {
+    id = Utils::toUpper(Utils::trim(id));
+    HashNode* current = buckets[hashFunction(id)];
+    while (current != NULL) {
+        if (current->data.id == id) {
+            return &(current->data);
+        }
+        current = current->next;
+    }
+    return NULL;
+}
+
 
