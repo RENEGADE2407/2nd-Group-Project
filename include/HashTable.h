@@ -35,7 +35,7 @@ public:
     int getCollisions() const { return collisions; }
 
     // this prints what is stored in every bucket
-    void printBucket() const;
+    void printBuckets() const;
 
 private:
     HashTable(const HashTable& other);
