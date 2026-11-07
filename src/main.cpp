@@ -21,6 +21,22 @@ void handleBfsReachability(const CampusGraph& graph) {
   graph.bfsReachable(name);   // prints its own error if the building is unknown
 }
 
+// Reads a whole line and converts it to a menu number.
+// Returns -1 for blank/letters/too long, and -2 when input has ended (EOF).
+int readMenuChoice()
+{
+  string line;
+  if (!getline(cin, line))
+    return -2;
+  line = Utils::trim(line);
+  if (line.empty() || line.size() > 3)
+    return -1;
+  for (size_t i = 0; i < line.size(); ++i)
+    if (line[i] < '0' || line[i] > '9')
+      return -1;
+  return stoi(line);
+}
+
 int main(int argc, char* argv[])
 {
   //this will initialize the department tree
@@ -65,7 +81,7 @@ int main(int argc, char* argv[])
       cout << "7. Search department" <<                      endl;
       cout << "8. Display department hierarchy" <<           endl;
       cout << "9. Run preorder traversal" <<                 endl;
-      cout << "10. Exit" <<                                  endl;
+      cout << "0. Exit" <<                                  endl;
       
 
       cout << endl;
