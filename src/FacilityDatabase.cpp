@@ -76,3 +76,36 @@ void FacilityDatabase::loadFromFile(string path, string fileLabel, const vector<
                 rejected++;
                 continue;
             }
+
+            string building = findBuilding(buildingNames, fields[2]);
+            if (building == "") {
+                printWarning(fileLabel, lineNumber, "unknown building '" + fields[2] + "'");
+                rejected++;
+                continue;
+            }
+
+            Facility f;
+            f.id = id;
+            f.name = fields[1];
+            f.building = building;
+            f.category = fields[3];
+
+            if (!table.insert(f)) {
+                printWarning(fileLabel, lineNumber,
+                    "duplicate ID '" + id + "' (first record kept)");
+                rejected++;
+                continue;
+            }
+
+            facilities.push_back(f);
+            accepted++;
+        }
+    }
+
+    cout << fileLabel << ": " << accepted << " accepted, " << rejected
+        << " rejected (hash capacity " << table.getCapacity()
+        << ", entries " << table.getEntries()
+        << ", collisions " << table.getCollisions() << ")" << endl;
+}
+
+//This prints every facility in the order it appeared in the file
