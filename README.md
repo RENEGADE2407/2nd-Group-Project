@@ -39,20 +39,34 @@ Project2/
 |--include/  
 | |--DepartmentTree.h  
 | |--DepartmentNode.h  
-| |-- **FILL IN OTHER HEADER FILES**  
+| |--CampusGraph.h
+| |--Facility.h
+| |--FacilityDatabase.h
+| |--HashTable.h
+| |--Utils.h
 |  
 |--src/  
 | |--main.cpp  
 | |--DepartmentTree.cpp  
-| |-- **FILL IN OTHER CPP FILES HERE**  
+| |--CampusGraph.cpp
+| |--Facility.cpp
+| |--FacilityDatabase.cpp
+| L--Hashtable.cpp
 |  
 |--data/  
 | |--buildings.txt  
 | |--connections.txt  
 | |--facilities.txt  
-| L--departments.txt  
+| L--departments.txt
+|
+|--test_data/
+| |--graph_demo.cpp
+| |--graph_edge_cases/
+| | |--building.txt
+| L L--connections.txt
 |  
-|--README.md  
+|
+|--README.txt  
 |--CONTRIBUTIONS.txt  
 |--design_document.txt  
 |--test_results.txt  
@@ -62,30 +76,34 @@ L--.gitignore
 -------------------------------------------------------------------------------------
 
 1. Clone the repository:
-   **FILL IN HERE**
+   git clone https://github.com/RENEGADE2407/2nd-Group-Project.git
 
 2. Change to the project directory:
-   **FILL IN HERE**
+   cd 2nd-Group-Project
 
 3. Compile the project:
-  **FILL IN HERE**
+  g++ -std=c++11 -Wall -Wextra -Iinclude src/*.cpp -o campus
 
 **_How to Run_**
 --------------------------------------------------------------------------------------------
 
 Run the executable:
 
-**FILL IN HERE**
+Linux / CELL:       ./campus
+Windows:            campus
 
 The program will load resources from buildings.txt, connections.txt, facilities.txt, departments.txt and display a command-line menu.
+To load a different data directory, pass it as the first argument:
+ 
+  ./campus testdata/graph_edge_cases
 
 **_Data Set / Input_**
 -----------------------------------------------------------------------------------------------
 
-* buildings.txt
-* connections.txt
-* facilities.txt
-* departments.txt
+* buildings.txt    BuildingName
+* connections.txt  BuildingA|BuildingB
+* facilities.txt   FacilityID|FacilityName|BuildingName|Category
+* departments.txt  DepartmentName|ParentName
 
 **_Methodology_**
 ----------------------------------------------------------------------------------------------
@@ -99,6 +117,17 @@ The program will load resources from buildings.txt, connections.txt, facilities.
 7. Display department hierarchy using preorder with indentation.
 8. Use preorder traversal without indentation.
 9. Validate input data text files and manage invalid menu user inputs
+
+HASH FUNCTION AND COLLISION STRATEGY
+[Member A: describe the hash function and the collision strategy here.]
+ 
+GRAPH REPRESENTATION
+Adjacency list: a vector of building names plus a vector of neighbor-index
+lists, kept in file and connection order. See design_document.txt.
+ 
+TESTING
+Tests are recorded in test_results.txt (test number, description, input,
+expected result, actual result, pass or fail).
 
 **_Results_**
 ------------------------------------------------------------------------------------------------------
