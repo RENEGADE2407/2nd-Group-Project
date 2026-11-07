@@ -7,7 +7,8 @@ Format: Test # | Description | Input | Expected | Actual | Pass/Fail
 Environment
   Tested on (Member B): Windows, g++ (MinGW), command prompt
   Build: g++ -std=c++11 -Wall -Wextra -Iinclude src/CampusGraph.cpp testdata/graph_demo.cpp -o graph_demo
-  UNT CSE CELL: [ ] NOT YET RUN - fill in date, compiler version, and result
+  UNT CSE CELL: [CELL13-CSE.ENG.UNT.EDU] 07/11/2026
+  Build: g++ -std=c++11 -Wall -Wextra -Iinclude src/*.cpp -o campus
 
 ==============================================================================
 SECTION B: CAMPUS GRAPH, BFS, AND BUILDINGS/CONNECTIONS LOADING (Member B)
@@ -128,28 +129,23 @@ B-14 | Empty graph display (no buildings loaded)
             Total buildings: 0 / Total connections: 0
   Result:   PASS
 
-
-------------------------------------------------------------------------------
-PENDING (need the team main.cpp / menu)
-------------------------------------------------------------------------------
-
 B-15 | BFS blank name through the menu
   Input:    Menu option 5, press Enter with no text
-  Expected: Error message; return to menu
-  Actual:   [ ] not yet run
-  Result:   [ ]
+  Expected: Error message, return to menu
+  Actual:   Error: building name cannot be blank. returns to menu
+  Result:   PASS
 
 B-16 | Building name with spaces through the menu
   Input:    Menu option 5, enter: Student Union
   Expected: BFS runs from Student Union (distance 0); 6 of 7
-  Actual:   [ ] not yet run
-  Result:   [ ]
+  Actual:   Reachable: 6 of 7 buildings
+  Result:   PASS
 
 B-17 | Repeated operations after errors (via menu)
   Input:    Enter an unknown building, then run option 4, then option 5 again
   Expected: Menu keeps working after each error
-  Actual:   [ ] not yet run
-  Result:   [ ]
+  Actual:   Menu keeps working after each error
+  Result:   PASS
 
 
 ==============================================================================
@@ -286,10 +282,52 @@ Physics
 SECTION S: SHARED - MENU AND INPUT HANDLING (whole team)
 ==============================================================================
 Required M1 tests:
-  - Invalid menu input: blank, letters, out-of-range number
-  - Text typed at a numeric prompt (program recovers, does not loop forever)
-  - Names containing spaces at every name prompt
-  - Blank names at every name prompt (error, return to menu)
-  - Repeated operations after errors (menu keeps working)
-  - Option 0 exits cleanly
-  - Menu numbers match Section 6.9 exactly (M1 menu)
+S-1 | Invalid menu input: blank
+  Input: " "
+  Expected: Error message, Print menu
+  Actual: "Invalid input please try again." Print menu
+  Result: PASS
+
+S-2 | Invalid menu input: letters
+  Input: abc
+  Expected: Error message. Print menu
+  Actual: "Invalid input please try again." | Print menu
+  Result: Pass
+
+S-3 | Invalid menu input: out of range
+  Input: -1
+  Expected: Error message. Print menu
+  Actual: Invalid input please try again." | Print menu
+  Result: PASS
+
+S-4 | - Text typed at a numeric prompt
+  Input: menu choice 2, FFFF
+  Expected: Error message, Return to menu
+  Actual: Invalid format: 'FFFF'. An ID is F followed by exactly three digits (for example, F001). | Return to menu
+  Result: PASS
+
+S-5 | Names containing spaces at every name prompt
+  Input: menu option 5, Student Union | menu option 6, Computer Engineering | menu option 7, Computer Science
+  Expected: Display reachable buildings | Add new department | Search department
+  Actual: Reachable: 6 of 7 buildings | Computer Engingeering has been successfully added to the department tree.
+  |----Department found---- Department Name: Computer Science
+  Result : PASS
+
+S-6 | Blank names at every name prompt
+  Input: menu 5, " " | menu 6, " ", " " | menu 7, " "
+  Expected: error, return to menu
+  Actual: Error: building name cannot be blank. , return to menu | WARNING: Department name empty. , return to menu 
+  | WARNING:  department not found. , return to menu
+  Result: PASS
+
+S-7 | Repeated operations after errors 
+  Input: blank input, letters, out of range number
+  Expected: Menu displays error, continues working
+  Actual: Menu displays error, continues working
+  Result: PASS
+
+S-8 | Option 0 exits cleanly
+  Input: 0
+  Expected: "Thank you for using the Campus Information System. Goodbye!"
+  Actual: "Thank you for using the Campus Information System. Goodbye!"
+  Result: PASS
