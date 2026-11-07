@@ -5,7 +5,7 @@ Milestone 1
 
 Team members (all are collaborators on the GitHub repository):
 
-  Member A: [Full name]   GitHub: [username]
+  Member A: [Benjamin Constantin]   GitHub: [bc0723]
   Member B: [Drake Thompson]   GitHub: [draket321]
   Member C: [Jason Wildman]   GitHub: [RENEGADE2407]
 
@@ -17,7 +17,8 @@ Member A - Facilities and hash table
   - Facility records and loading facilities.txt
   - Custom hash table (hash function, collision handling, diagnostic)
   - Facility ID search and "view all facilities"
-  [Member A: confirm file names and details]
+  Files: Facility.h, Facility.cpp, FacilityDatabase.h, FacilityDatabase.cpp,
+        HashTable.h, HashTable.cpp.
 
 Member B - Campus graph and BFS
   - include/CampusGraph.h, src/CampusGraph.cpp
