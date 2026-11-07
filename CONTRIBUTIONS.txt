@@ -53,11 +53,17 @@ Shared work
     * Primary implementation and organization by Member C.
     * Member B and C integrated their individual modules as they became available. 
   - Input handling for menu and prompts
+    * Menu handling split between all members for each individual module
   - README.txt
     * Primarily authored by Member C
   - design_document.txt test_results.txt, CONTRIBUTIONS.txt
+    * test_results.txt structure authored by Member B (Includes individual sections from each member)
+    * CONTRIBUTIONS.txt primarily authored by Member B
+    * design_document.txt authored by Member B
   - .gitignore 
+    * authored by Member B
   - repository setup
     * Member C
   - Compiling and testing on the UNT CSE CELL machines
-  [Fill in who did which parts]
+    * Initial tests by member C
+    * Secondary testing by member B
