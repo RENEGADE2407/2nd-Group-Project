@@ -6,6 +6,7 @@
 using namespace std;
 
 // This header file will define the departmentTree class, which will manage the department hierarchy in the department tree
+//Author: Jason Wildman
 
 
 class DepartmentTree
