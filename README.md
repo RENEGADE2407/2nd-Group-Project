@@ -119,7 +119,10 @@ To load a different data directory, pass it as the first argument:
 9. Validate input data text files and manage invalid menu user inputs
 
 HASH FUNCTION AND COLLISION STRATEGY
-[Member A: describe the hash function and the collision strategy here.]
+Hash function (custom, no std::hash): the facility ID is first trimmed and
+converted to uppercase. Then, starting with h = 0, for each character c of
+the ID:  h = (h * 31 + c) mod capacity.  The final h is the bucket index
+(0 to capacity-1).
  
 GRAPH REPRESENTATION
 Adjacency list: a vector of building names plus a vector of neighbor-index
@@ -139,8 +142,6 @@ A custom hash table is used for facility lookup by ID. An undirected graph that 
 The department hierarchy is illustrated using a general tree, the user can add and search departments. Additionally the user can display the hierarchy with indentation or perform preorder traversal without indentation.
 
 The system also includes input validation and file loading errors for invalid menu choices and duplicate entries 
-
-Testing was performed for **FILL IN HERE**
 
 
 **_Challenges / Limitations_**
