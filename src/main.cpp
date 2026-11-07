@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
   departmentTree.LoadDepartments(dataDir + "/departments.txt");
 
   //this is the menu selection variable
-  int menuChoice = 0;
+  int menuChoice = -1;
 
   //this is the main menu while loop
   while(menuChoice != 0)
