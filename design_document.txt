@@ -1,0 +1,75 @@
+==============================================================================
+DESIGN DOCUMENT - Campus Information System (Milestone 1)
+==============================================================================
+
+MAIN CLASSES AND MODULES
+- Facility / HashTable (Member A): facility records and the custom ID hash table.
+- CampusGraph (Member B): undirected campus graph, buildings/connections
+  loading, display, and BFS reachability.
+- DepartmentNode / DepartmentTree (Member C): general department tree.
+- Utils.h (Member B): trim, case-insensitive compare, comment and field helpers.
+- main.cpp: initialization, file loading order, and the menu loop only.
+
+------------------------------------------------------------------------------
+1. HASH TABLE (Member A)
+------------------------------------------------------------------------------
+[Member A: add the following, about one paragraph:
+ - The hash function and its formula (uses the uppercase key and the capacity)
+ - The collision strategy chosen and why
+ - What counts as a collision (and that rejected duplicates do not count)
+ - The table capacity and the full-table behavior]
+
+------------------------------------------------------------------------------
+2. CAMPUS GRAPH (Member B)
+------------------------------------------------------------------------------
+Representation: an ADJACENCY LIST. CampusGraph keeps a vector of building
+names (display spelling from buildings.txt, in file order) and a parallel
+vector of neighbor lists, where each list holds the indices of adjacent
+buildings in the order the connections were accepted.
+
+Why an adjacency list: the campus graph is sparse (few walkways compared with
+the possible pairs), so a list uses less memory than a matrix. It grows
+dynamically (no fixed-size arrays), and appending neighbors naturally keeps
+connection order, which matters because BFS order depends on it. Neighbors
+are never sorted.
+
+Edges: an undirected connection is stored at BOTH endpoints but counted once
+in connectionCount. Checking one endpoint's list is enough to reject both a
+duplicate (A|B, A|B) and a reversed duplicate (A|B, B|A).
+
+Name matching: building names are trimmed and compared ignoring ASCII case;
+internal spaces are preserved. The spelling from the first accepted record in
+buildings.txt is used everywhere.
+
+Loading and validation (buildings.txt, connections.txt): lines are read whole
+with getline; blank lines and lines whose first non-whitespace character is #
+are skipped; fields are split on | and trimmed (this also removes a Windows
+\r). Records are rejected, with a warning showing filename, line number, and
+reason, for wrong field count, empty field, duplicate building (any
+capitalization), unknown building, self-connection, and duplicate or reversed
+connection. A missing file prints an error and is treated as empty. One load
+summary line (accepted/rejected counts) is printed per file.
+
+BFS reachability: a queue and a distance array that doubles as the visited
+structure (-1 means not visited). A building is marked visited when it is
+ENQUEUED, not when dequeued, so it can never be added twice. The start has
+distance 0 and counts as reachable. Output lists buildings in visit order with
+distances, then "Reachable: N of total". An unknown start prints an error and
+returns to the menu; an isolated start shows only itself. The same graph and
+BFS routine are reused by display and statistics.
+
+------------------------------------------------------------------------------
+3. DEPARTMENT TREE (Member C)
+------------------------------------------------------------------------------
+[Member C: describe the general tree (node with a vector of child pointers),
+ how the root is created, the preorder traversal, and memory cleanup.]
+
+------------------------------------------------------------------------------
+4. MAIN PROGRAM
+------------------------------------------------------------------------------
+main.cpp only coordinates: it reads the optional data-directory argument
+(default data/), loads the files in the required order (buildings,
+connections, facilities, departments), and runs the repeating menu. Menu
+choices are read as whole lines so blank input, letters, and out-of-range
+numbers produce an error and recover without looping forever. Names are read
+with getline so they may contain spaces.
