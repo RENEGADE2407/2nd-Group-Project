@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
 #include "../include/DepartmentTree.h"
-#include "../include/FacilityDatabase.h
-//FILL IN HERE: include facilities and hashtable headers
+#include "../include/FacilityDatabase.h"
 #include "../include/CampusGraph.h"
 #include "../include/Utils.h" // String functions
 
@@ -92,13 +91,16 @@ int main(int argc, char* argv[])
         {
           case 1:
             {
-          //FILL IN HERE: display all facilities
+          facilities.displayAll();
           break;
             }
 
           case 2: 
             {
-          //FILL IN HERE: search facilities by ID
+          cout << "Enter facility ID: ";
+          string id;
+          getline(cin, id);
+          facilities.searchById(id);
           break;
             }
 
