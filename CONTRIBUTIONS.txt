@@ -59,7 +59,7 @@ Shared work
   - design_document.txt test_results.txt, CONTRIBUTIONS.txt
     * test_results.txt structure authored by Member B (Includes individual sections from each member)
     * CONTRIBUTIONS.txt primarily authored by Member B
-    * design_document.txt authored by Member B
+    * design_document.txt structure by Member B (each individual section authored by the corresponding member)
   - .gitignore 
     * authored by Member B
   - repository setup
