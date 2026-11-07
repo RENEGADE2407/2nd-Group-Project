@@ -33,13 +33,13 @@ int main(int argc, char* argv[])
 
   
   //FILES MUST BE LOADED IN THIS ORDER
-  //FILL IN HERE: 1. load the buildings.txt
+  //1. load the buildings.txt
   graph.loadBuildings(dataDir);
 
-  //FILL IN HERE: 2. load the connections.txt
+  //2. load the connections.txt
   graph.loadConnections(dataDir);
 
-  //FILL IN HERE: 3. load the facilities.txt
+  //3. load the facilities.txt
   vector<string> buildingNames;
   for (int i = 0; i < graph.buildingCount(); i++) {
       buildingNames.push_back(graph.buildingName(i));
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
   facilities.loadFromFile(dataDir + "/facilities.txt", "facilities.txt", buildingNames);
   
   //this will call the load function and load the department info from the data file
-  departmentTree.LoadDepartments("data/departments.txt");
+  departmentTree.LoadDepartments(dataDir + "/departments.txt");
 
   //this is the menu selection variable
   int menuChoice = 0;
