@@ -8,6 +8,7 @@ using namespace std;
 
 /*
 This header file will define a node representing an individual department in the department tree
+Author: Jason Wildman
 */
 
 struct DepartmentNode
