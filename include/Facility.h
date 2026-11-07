@@ -3,7 +3,7 @@
 #ifndef FACILITY_H
 #define FACILITY_H
 #include <string>
-#using namespace std;
+using namespace std;
 
 class Facility {
 public:
