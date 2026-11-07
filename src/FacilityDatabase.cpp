@@ -109,3 +109,29 @@ void FacilityDatabase::loadFromFile(string path, string fileLabel, const vector<
 }
 
 //This prints every facility in the order it appeared in the file
+void FacilityDatabase::displayAll() const {
+    if (facilities.empty()) {
+        cout << "No facilities are loaded." << endl;
+        return;
+    }
+    for (int i = 0; i < (int)facilities.size(); i++) {
+        cout << facilities[i].toString() << endl;
+    }
+    cout << "Total facilities: " << facilities.size() << endl;
+}
+
+// There are three different possibilities: invalid format, found, or not found
+void FacilityDatabase::searchById(string id) const {
+    id = Utils::toUpper(Utils::trim(id));
+    if (!isValidFacilityId(id)) {
+        cout << "Invalid format: '" << id << "'. An ID is F followed by exactly "
+             << "three digits (for example, F001)." << endl;
+        return;
+    }
+    const Facility* result = table.find(id);   // uses the hash table, no scanning
+    if (result == NULL) {
+        cout << "Not found: no facility with ID " << id << "." << endl;
+    } else {
+        cout << "Found: " << result->toString() << endl;
+    }
+}
