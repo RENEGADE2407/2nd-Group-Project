@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "../include/DepartmentTree.h"
+#include "../include/FacilityDatabase.h
 //FILL IN HERE: include facilities and hashtable headers
 #include "../include/CampusGraph.h"
 #include "../include/Utils.h" // String functions
@@ -26,7 +27,7 @@ int main(int argc, char* argv[])
   //this will initialize the department tree
   DepartmentTree departmentTree;
 
-  //FILL IN HERE: intitialize facilities, hash table
+  FacilityDatabase facilities;
   string dataDir = (argc > 1) ? argv[1] : "data";   // default data directory
   CampusGraph graph; // Initialize graph
   
@@ -40,6 +41,11 @@ int main(int argc, char* argv[])
   graph.loadConnections(dataDir);
 
   //FILL IN HERE: 3. load the facilities.txt
+  vector<string> buildingNames;
+  for (int i = 0; i < graph.buildingCount(); i++) {
+      buildingNames.push_back(graph.buildingName(i));
+  }
+  facilities.loadFromFile(dataDir + "/facilities.txt", "facilities.txt", buildingNames);
   
   //this will call the load function and load the department info from the data file
   departmentTree.LoadDepartments("data/departments.txt");
