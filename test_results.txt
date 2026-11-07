@@ -170,17 +170,117 @@ Required M1 tests (Section 10)
 ==============================================================================
 SECTION C: DEPARTMENT TREE (Member C)
 ==============================================================================
-Required M1 tests:
-  - Unknown department parent rejected when loading departments.txt
-  - Empty tree: adding the first department makes it the root with NO
-    parent prompt
-  - Root-only tree
-  - Search for the root (parent shown as None), a non-root, and a missing
-    department
-  - Add a department with an unknown parent, and add a duplicate name
-    (tree stays unchanged)
-  - Preorder traversal and the indented hierarchy (four spaces per depth)
-  - Duplicate department names that differ only by capitalization
+Environment
+  Tested on (Member C): Windows, MinGW, Command Prompt
+  
+  Build: g++ -std=c++11 -Wall -Wextra -I"C:\Users\reneg\OneDrive\Documents\CSCE_2110\2nd-Group-     Project-main\include" "C:\Users\reneg\OneDrive\Documents\CSCE_2110\2nd-Group-Project-main\src\main.cpp" "C:\Users\reneg\OneDrive\Documents\CSCE_2110\2nd-Group-Project-main\src\DepartmentTree.cpp" "C:\Users\reneg\OneDrive\Documents\CSCE_2110\2nd-Group-Project-main\src\CampusGraph.cpp" "C:\Users\reneg\OneDrive\Documents\CSCE_2110\2nd-Group-Project-main\src\Facility.cpp" -o "C:\Users\reneg\OneDrive\Documents\CSCE_2110\2nd-Group-Project-main\CampusSystem.exe"
+
+  C-01 | Non-existent parent department when loading departments.txt
+    Input:    University|NONE; 
+              Computer Science|University; 
+              Biology|College of Medicine  
+    Expected: Accept valid departments and only reject the department with invalid parent
+    Actual:   WARNING: Parent department not found for data/departments_invalid_parent_test.txt file, line number: 3.
+The data/departments_invalid_parent_test.txt file accepted 2 departments, and rejected 1.
+    Result:   PASS
+
+  C-02 | Display hierarchy/preorder traversal on Empty tree
+    Input:    Empty department file, Menu option 8, menu option 9
+    Expected: Display an empty tree message
+    Actual:   Department tree is empty. (same output for preorder traversal)
+    Result:   PASS
+
+  C-03 | Adding the first department makes it the root with NO parent prompt
+    Input:    Menu option 6, University
+    Expected: University becomes root, and user is not prompted for parent
+    Actual:   Enter department name: University
+              University has been added as the root node.
+    Result:   PASS
+
+  C-04 | Root-only hierarchy
+    Input:    Menu option 8 (Tree empty except for root)
+    Expected: Display only the root department
+    Actual:   University
+    Result:   PASS
+
+  C-05 | Search for the root
+    Input:    Menu option 7, University
+    Expected: Show parent none, 2 children , and depth of 0 
+    Actual:   ----Department found----
+Department Name: University
+Parent Department: None, University is the root node.
+Direct-child/children: 2
+Depth: 0
+    Result:   PASS
+
+
+  C-06 | Search for a non-root 
+    Input:    Menu option 7, Physics
+    Expected: Display Physics, display parent, 0 of children, and depth
+    Actual:   ----Department found----
+Department Name: Physics
+Parent Department: College of Science
+Direct-child/children: 0
+Depth: 2
+    Result:   PASS
+
+
+  C-07 | Search for a non-existent department
+    Input:    Menu option 7, Biology
+    Expected: Display a department not found message
+    Actual:   WARNING: Biology department not found.
+    Result:   PASS
+
+
+  C-08 | Add a department with a non-existent parent
+    Input:    Menu option 6, data structures, Biology
+    Expected: Reject the department and display message, leave hierarchy unchanged
+    Actual:   WARNING: Parent department not found in department tree. (hiearchy unchanged)
+    Result:   PASS
+
+  C-09 | Reject a duplicate department (tree stays unchanged)
+    Input:    Menu option 6, Computer Science, Mathematics
+    Expected: Reject duplicate department, display message, and tree remains unchanged
+    Actual:   WARNING: There is already a department named: Computer Science.
+    Result:   PASS
+
+  C-10 | Duplicate department names that differ only by capitalization
+    Input:    Menu option 6, COMPUTER SCIENCE, University
+    Expected: reject duplicate department and display message
+    Actual:   WARNING: There is already a department named: COMPUTER SCIENCE.
+    Result:   PASS
+
+  C-11 | Display department hierarchy with indentation (four spaces per depth)
+    Input:    Menu option 8
+    Expected: Display department hierarchy in preorder with 4 spaces per depth indentation
+    Actual:  
+University
+    College of Engineering
+        Computer Science
+        Electrical Engineering
+    College of Science
+        Mathematics
+        Physics
+    Result:   PASS
+
+  C-12 | Preorder traversal (no indentation)
+    Input:    Menu option 9
+    Expected: Run/display preorder no indentation
+    Actual:   
+University
+College of Engineering
+Computer Science
+Electrical Engineering
+College of Science
+Mathematics
+Physics
+    Result:   PASS
+
+  C-13 | Add valid department
+    Input:    Menu option 6, data models, College of Science
+    Expected: Add department under specified parent
+    Actual:   data models has been successfully added to the department tree. (under College of Science)
+    Result:   PASS
 
 ==============================================================================
 SECTION S: SHARED - MENU AND INPUT HANDLING (whole team)

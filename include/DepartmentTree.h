@@ -54,6 +54,9 @@ class DepartmentTree
       //Puts department hierarchy on display in preorder with indentation
       void DisplayHierarchy() const;
 
+      //function to check if tree is empty, used when creating a root node to keep parent node from displaying message
+      bool IsEmpty() const;
+
 
 
 

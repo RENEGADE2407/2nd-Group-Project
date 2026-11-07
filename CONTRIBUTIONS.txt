@@ -7,7 +7,7 @@ Team members (all are collaborators on the GitHub repository):
 
   Member A: [Benjamin Constantin]   GitHub: [bc0723]
   Member B: [Drake Thompson]   GitHub: [draket321]
-  Member C: [Full name]   GitHub: [username]
+  Member C: [Jason Wildman]   GitHub: [RENEGADE2407]
 
 ------------------------------------------------------------------------------
 Modules owned
@@ -33,18 +33,31 @@ Member B - Campus graph and BFS
   - Own tests: Section B of test_results.txt; testdata/graph_demo.cpp
     (standalone test)
 
-Member C - Department tree
-  - Department tree and loading departments.txt
-  - Add department, search department, hierarchy display, preorder traversal
-  [Member C: confirm file names and details]
+Member C - Department tree and preorder traversal
+  - include/DepartmentNode.h, include/DepartmentTree.h, src/DepartmentTree.cpp
+    * General tree structure used to represent the academic department hierarchy.
+    * Loading data/departments.txt with validation, warnings (filename, line number, reason), and load summaries
+    * Department insertion, including root creation, parent validation, and rejection of invalid additions.
+    * Duplicate department detection, including case-insensitive comparisons.
+    * Department searching and then reporting parent, child count, and depth.
+    * Hierarchy display using preorder traversal with four-space indentation for each level.
+    * Preorder traversal without indentation.
+    * Helper functions for whitespace removal, case normalization, and recursive tree cleanup.
+  - Own tests: Section C of test_results.txt
 
 ------------------------------------------------------------------------------
 Shared work
 ------------------------------------------------------------------------------
 
   - Menu and main.cpp (initialization, file-loading order, menu loop)
+    * Primary implementation and organization by Member C.
+    * Member B and C integrated their individual modules as they became available. 
   - Input handling for menu and prompts
-  - README.txt, design_document.txt, test_results.txt, CONTRIBUTIONS.txt
-  - .gitignore and repository setup
+  - README.txt
+    * Primarily authored by Member C
+  - design_document.txt test_results.txt, CONTRIBUTIONS.txt
+  - .gitignore 
+  - repository setup
+    * Member C
   - Compiling and testing on the UNT CSE CELL machines
   [Fill in who did which parts]

@@ -544,7 +544,11 @@ void DepartmentTree::PreorderTraversal() const
 
 
 
-
+//this will check if tree empty, used when creating root to determine if parent prompt needed
+bool DepartmentTree::IsEmpty() const
+{
+  return root == nullptr;
+}
 
 
 
