@@ -86,21 +86,21 @@ int main(int argc, char* argv[])
 
       cout << endl;
       cout << "Enter your choice: ";
-      cin >> menuChoice;
+         menuChoice = readMenuChoice();
 
-      //checks for invalid input
-      if(cin.fail())
+      //input ended (End of File): stop instead of looping forever
+      if(menuChoice == -2)
+      {
+        break;
+      }
+  
+      //checks for invalid input (blank, letters, too long)
+      if(menuChoice == -1)
       {
         cout << "Invalid input please try again." << endl;
-
-        cin.clear();
-        cin.ignore(1000, '\n');
-
         continue;
-        
       }
-
-      cin.ignore(1000, '\n');
+  
 
 
       switch(menuChoice)
