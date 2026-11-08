@@ -61,8 +61,29 @@ BFS routine are reused by display and statistics.
 ------------------------------------------------------------------------------
 3. DEPARTMENT TREE (Member C)
 ------------------------------------------------------------------------------
-[Member C: describe the general tree (node with a vector of child pointers),
- how the root is created, the preorder traversal, and memory cleanup.]
+Representation: A GENERAL TREE. Each department node stores the department name,
+a pointer to its parent, and a vector of pointers to its children. By using a vector of 
+child pointers it allows each departmet to have any number of subdepartments.
+
+Why a general tree: the tree is complementary to the project because it allows for 
+a department hierarchy with a parent/child structure. Each department can have multiple sub
+-departments. The general tree allows the relationships to be represented without limiting
+the number of children each department can have.
+
+Loading and vilidation (departments.txt): each line is read using getline. Blank lines and comment lines are skipped
+and the fields are separated using |. Department names and parent namess are trummed before they are processed. 
+The first valid department is used as the root of the tree, and every following department
+is added under the specidfied parent. Invalid records (duplicate names or non-existent parents)
+are rejected, and a warning is displayed. A summary of the accepted and rejected departments is 
+also displayed.
+
+Displaying hierarchy: Each department is displayed using recursive preorder traversal. Each 
+department is displayed before its children with indentation to show the relationships.
+
+Memory management: when  department nodes are created they are dynamically allocated.
+the destructor recursively deletes every child before deleting the parent node. This ensures
+that all dynamically allocated memory is properly deleted.
+
 
 ------------------------------------------------------------------------------
 4. MAIN PROGRAM
