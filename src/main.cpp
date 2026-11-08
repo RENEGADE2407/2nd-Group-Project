@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
       cout << "7. Search department" <<                      endl;
       cout << "8. Display department hierarchy" <<           endl;
       cout << "9. Run preorder traversal" <<                 endl;
-      cout << "0. Exit" <<                                  endl;
+      cout << "10. Exit" <<                                  endl;
       
 
       cout << endl;
@@ -192,7 +192,7 @@ int main(int argc, char* argv[])
               break;
             }
 
-          case 0:
+          case 10:
             {
               cout << "Thank you for using the Campus Information System. Goodbye!" << endl;
               break;
