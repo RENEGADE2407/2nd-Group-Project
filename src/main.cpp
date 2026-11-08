@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
   int menuChoice = -1;
 
   //this is the main menu while loop
-  while(menuChoice != 0)
+  while(menuChoice != 10)
     {
       cout << "======= CAMPUS INFORMATION SYSTEM =======" << endl;
       cout << "1. View all facilities" <<                    endl;
