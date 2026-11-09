@@ -151,17 +151,100 @@ B-17 | Repeated operations after errors (via menu)
 ==============================================================================
 SECTION A: FACILITIES, HASH TABLE, ID SEARCH (Member A)
 ==============================================================================
-Required M1 tests (Section 10)
-  - Valid facility records, blank lines, comment lines, too few/many fields
-  - Duplicate facility IDs that differ only by capitalization
-  - Unknown building reference in facilities.txt
-  - Successful ID search, lowercase ID search (f004), invalid-format ID (004),
-    and not-found ID (F999)
-  - At least one hash collision using your own testdata/ folder, with the
-    HASH-7 diagnostic output (capacity, entries, collisions)
-  - A duplicate-key insertion attempt, confirming it does NOT change the
-    collision count
-  - View all facilities (file order, total shown, and the empty case)
+A-01 | Sample facilities load with hash diagnostic
+  Input:    ./campus
+  Expected: 10 accepted, 0 rejected; capacity, entries, collisions printed
+  Actual:   facilities.txt: 10 accepted, 0 rejected
+            (hash capacity 13, entries 10, collisions 1)
+  Result:   PASS
+ 
+A-02 | View all facilities (file order, total)
+  Input:    menu 1 (sample data)
+  Expected: 10 facilities in facilities.txt order, then the total
+  Actual:   F001 | Main Reading Room | Library | Library ... through F010,
+            then "Total facilities: 10"
+  Result:   PASS
+ 
+A-03 | ID search, found
+  Input:    menu 2, F004
+  Expected: Found: Computer Lab A | Science Building | Computer Lab
+  Actual:   Found: F004 | Computer Lab A | Science Building | Computer Lab
+  Result:   PASS
+ 
+A-04 | ID search, lowercase input
+  Input:    menu 2, f004
+  Expected: Same result as F004
+  Actual:   Found: F004 | Computer Lab A | Science Building | Computer Lab
+  Result:   PASS
+ 
+A-05 | ID search, invalid format
+  Input:    menu 2, 004
+  Expected: Invalid-format message (F plus exactly three digits)
+  Actual:   Invalid format: '004'. An ID is F followed by exactly three digits
+            (for example, F001).
+  Result:   PASS
+ 
+A-06 | ID search, valid but not found
+  Input:    menu 2, F999
+  Expected: Not-found message showing the normalized ID
+  Actual:   Not found: no facility with ID F999.
+  Result:   PASS
+ 
+A-07 | Hash collision with own test data (HASH-7 diagnostic)
+  Input:    ./campus testdata/hash_collision
+            (F006, F011, f029 all hash to bucket 0 at capacity 13)
+  Expected: collisions 2 (second and third insertions land in a used bucket)
+  Actual:   facilities.txt: 4 accepted, 1 rejected
+            (hash capacity 13, entries 4, collisions 2)
+  Result:   PASS
+ 
+A-08 | Duplicate-key insertion does not change the collision count
+  Input:    same run as A-07; line 5 repeats F011
+  Expected: Duplicate rejected, first record kept, collisions stays 2
+  Actual:   Warning: facilities.txt line 5: rejected - duplicate ID 'F011'
+            (first record kept); final collisions 2 (not 3)
+  Result:   PASS
+ 
+A-09 | Lowercase ID and building in a data file are normalized
+  Input:    ./campus testdata/hash_collision, menu 2, f029
+            (data line: f029|Quiet Room|library|Library)
+  Expected: Stored as F029; building spelling from buildings.txt
+  Actual:   Found: F029 | Quiet Room | Library | Library
+  Result:   PASS
+ 
+A-10 | Facilities file bad records
+  Input:    ./campus testdata/loader_edge_cases (file uses Windows CRLF)
+  Expected: Blank and comment lines skipped; duplicate ID (same case and
+            different case), unknown building, too few and too many fields,
+            empty field, and invalid IDs rejected with file, line, reason;
+            lowercase ID accepted; "#" inside a name kept; spaces trimmed
+  Actual:   line 5 duplicate ID 'F001' (first record kept)
+            line 6 duplicate ID 'F001' (first record kept)   [was f001]
+            line 7 unknown building 'Nowhere Hall'
+            line 8 wrong number of fields
+            line 9 wrong number of fields
+            line 10 a required field is empty
+            line 11 invalid ID 'F12' (must be F followed by exactly three digits)
+            line 12 invalid ID 'G007' (must be F followed by exactly three digits)
+            facilities.txt: 3 accepted, 8 rejected (... entries 3, collisions 0)
+            View all: F001, F002 (from f002|...|library), F008 | Room #5 | Gym | Recreation
+  Result:   PASS
+ 
+A-11 | Missing facilities file / empty facility list
+  Input:    ./campus nonexistent, then menu 1
+  Expected: Error naming the file, treated as empty, no crash; clear message
+  Actual:   Error: can not open file facilities.txt (nonexistent/facilities.txt).
+            Treating it as empty.
+            facilities.txt: 0 accepted, 0 rejected (hash capacity 13, entries 0,
+            collisions 0)   /   No facilities are loaded.
+  Result:   PASS
+ 
+A-12 | Blank facility ID search
+  Input:    menu 2, (blank)
+  Expected: Error, return to menu
+  Actual:   Invalid format: ''. An ID is F followed by exactly three digits
+            (for example, F001).
+  Result:   PASS
 
 ==============================================================================
 SECTION C: DEPARTMENT TREE (Member C)
