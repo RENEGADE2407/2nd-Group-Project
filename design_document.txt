@@ -13,11 +13,35 @@ MAIN CLASSES AND MODULES
 ------------------------------------------------------------------------------
 1. HASH TABLE (Member A)
 ------------------------------------------------------------------------------
-[Member A: add the following, about one paragraph:
- - The hash function and its formula (uses the uppercase key and the capacity)
- - The collision strategy chosen and why
- - What counts as a collision (and that rejected duplicates do not count)
- - The table capacity and the full-table behavior]
+Hash function: the ID is trimmed and uppercased BEFORE hashing, so F004 and
+f004 reach the same bucket. Then h = 0 and, for each character c,
+h = (h * 31 + c) mod capacity. The result is a valid index in [0, capacity-1].
+No std::hash or library container is used.
+ 
+Collision strategy: separate chaining (each bucket is a singly linked list;
+new nodes are appended at the end). It was chosen because chains grow as
+needed, so there is no fixed limit on the number of facilities and the table
+cannot become full (the recommended strategy in HASH-5).
+ 
+Collision counting: one collision is counted each time an ACCEPTED insertion
+lands in a bucket that is already non-empty. A rejected duplicate ID is
+detected before counting, so it does not change the collision count.
+ 
+Capacity and full-table behavior: initial capacity 13, set by the constant
+DEFAULT_CAPACITY (and the HashTable constructor parameter). The table does
+not resize. Because of chaining it never becomes full, so no insertion is
+rejected for lack of space.
+ 
+Lookup: find() uppercases the ID, hashes it, and searches only that bucket's
+chain (no scan of all facilities). FacilityDatabase also keeps a vector of
+facilities in file order for "view all". Records are validated in this order:
+field count, empty fields, ID format (F plus three digits), unknown building,
+duplicate ID. The building spelling from buildings.txt is stored.
+ 
+Collision demonstration: with capacity 13, F005 and F010 collide in the
+sample data (1 collision). testdata/hash_collision/ loads F006, F011 and F029,
+which all hash to bucket 0 (2 collisions), plus a duplicate F011 that is
+rejected without changing the count.
 
 ------------------------------------------------------------------------------
 2. CAMPUS GRAPH (Member B)
