@@ -25,6 +25,9 @@ class DepartmentTree
       //Traverses tree preorder style
       void Preorder(DepartmentNode* node) const;
 
+      //Traverses tree postorder style
+      void Postorder(DepartmentNode* node) const;
+
       //recursively ldeletes nodes to free allocated memory
       void DeleteTree(DepartmentNode* node);
 
