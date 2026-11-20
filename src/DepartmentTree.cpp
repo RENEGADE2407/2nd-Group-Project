@@ -523,6 +523,8 @@ void DepartmentTree::Preorder(DepartmentNode* node) const
   
 }
 
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
 
 //overloaded function that will start the process of the display/traversal
 void DepartmentTree::PreorderTraversal() const
@@ -542,6 +544,45 @@ void DepartmentTree::PreorderTraversal() const
 
 //_________________________________________________________________________________________________________________________________________________________________________________________________________
 
+
+//This will traverse and display the departments in postorder no indentation
+void DepartmentTree::Postorder(DepartmentNode* node) const
+{
+  //first we must check if node doth exist
+  if (node == nullptr)
+  {
+    return;
+  }
+
+  //this will visit each child recursively before displaying the parent
+  for (size_t i = 0; i < node->children.size(); ++i)
+    {
+      Postorder(node->children[i]);
+    }
+
+      //once all the childrens have been visited display the current department
+      cout << node->name << endl;
+      
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+//This funct will start the postorder traversal
+void DepartmentTree::PostorderTraversal() const
+{
+  //first check if tree is empty 
+  if (root == nullptr)
+  {
+    cout << "Department tree is empty." << endl;
+
+    return;
+  }
+
+  //this calls the recursivefunction to begin the postorder traversing
+  Postorder(root);
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 //this will check if tree empty, used when creating root to determine if parent prompt needed
