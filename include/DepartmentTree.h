@@ -67,6 +67,9 @@ class DepartmentTree
       //Performs/Displays preorder traversal no indentation
       void PreorderTraversal() const;
 
+      //Performs/Displays postorder traversal no indentation
+      void PostorderTraversal() const;
+
 };
 
 
