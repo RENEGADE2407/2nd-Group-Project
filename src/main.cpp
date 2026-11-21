@@ -253,10 +253,8 @@ int main(int argc, char* argv[])
           //**Department statistics**
           case 15:
             {
-
-              //NEEDS TO BE FILLED IN
+              departmentTree.DisplayStatistics();
               break;
-              
             }
 
           //**Facility category report**
