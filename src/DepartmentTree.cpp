@@ -648,6 +648,146 @@ void DepartmentTree::LevelOrderTraversal() const
   //tree not empty therefore call the level order traversal function that was foretold 59 lines ago 
   LevelOrder(root);
 }
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function counts all departments in the tree
+int DepartmentTree::CountDepartments(DepartmentNode* node) const
+{
+
+  // one must first check if the node exists (i fear it wont be the last time we do this)
+  if(node == nullptr)
+  {
+    return 0;
+  }
+
+  //if it makes it past the 0 nodes check than there exists at least one node
+  int count = 1;
+
+  //this will visit each child and add its departments to thte total
+  for(size_t i = 0; i < node->children.size(); ++i)
+    {
+      count += CountDepartments(node->children[i]);
+    }
+
+  return count;
+  
+}
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function counts all leaf departments in the tree
+int DepartmentTree::CountLeaves(DepartmentNode* node) const
+{
+
+  //first check if there exists an node
+  if (node == nullptr)
+  {
+    return 0;
+  }
+
+  //if the department has no chitlings, it is a leaf therefore..
+  if (node->children.empty())
+  {
+
+    return 1;
+  }
+
+  //the following will perform the most necessary task of keeping track of the number of children
+  int count = 0;
+
+
+  //visit every child and count its leaves
+  for (size_t i = 0; i < node->children.size(); ++i)
+    {
+      count += CountLeaves(node->children[i]);
+    }
+
+  return count;
+  
+}
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function calculates the height of the department treee
+int DepartmentTree::GetTreeHeight(DepartmentNode* node) const
+{
+
+  //first one must check if the node doth exists 
+  if(node == nullptr)
+  {
+    return -1; //why return -1? elementary, my dear Watson! A leaf has no children, therfore its maxHeight remains -1
+  }
+
+  //one must keep track of the greatest height among the children
+  int maxHeight = -1;
+
+  //this will visit every child and determine which has the greatest height
+  for (size_t i = 0; i < node->children.size(); ++i)
+    {
+
+      int childHeight = GetTreeHeight(node->children[i]);
+
+      if(childHeight > maxHeight)
+      {
+        
+        maxHeight = childHeight;
+        
+      }
+
+      
+    }
+
+  //This will add one to the account for the edge connecting this node to its child
+  return maxHeight + 1;
+}
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function combines the previous three functions into one glorious display for case 15 Department statistics
+void DepartmentTree::DisplayStatistics() const
+{
+
+  //FIRST STEP... check if tree empty, then display apropriate message 
+  if (root == nullptr)
+  {
+
+    cout << "Total departments: 0" << endl;
+    cout << "Leaf departments: 0" << endl;
+    cout << "Tree height: N/A "  << endl;
+
+    return;
+  }
+
+  //this Calculates the total num of departments by calling the CountDepartment funtion
+  int totalDepartments = CountDepartments(root);
+
+
+  //this calculates the number of leaf departments by calling the CountLeaves function;
+  int totalLeaves = CountLeaves(root);
+
+  //this calculates the height of the department tree by calling the GetTreeHeight function
+  int treeHeight = GetTreeHeight(root);
+
+
+  //now to display the results
+  cout << "Total departments: " << totalDepartments << endl;
+  cout << "Leaf departments: " << totalLeaves << endl;
+  cout << "Tree height: " << treeHeight << endl;
+
+
+  
+}
+
+
 //_________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
