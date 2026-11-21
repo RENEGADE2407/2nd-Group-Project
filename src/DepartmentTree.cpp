@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cctype>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -582,6 +583,71 @@ void DepartmentTree::PostorderTraversal() const
   Postorder(root);
 }
 
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+//Thiss will traverse/display the departments in level order
+void DepartmentTree::LevelOrder(DepartmentNode* node) const
+{
+
+  //First check if the node exists or not
+  if (node == nullptr)
+  {
+    return;
+  }
+
+  //This will create a queue to keep track of departments waiting to be visited
+  queue<DepartmentNode*> departmentQueue;
+
+
+  //this will add the starting department to the queue
+  departmentQueue.push(node);
+
+  //this will ensure loop Continues untl every department visited
+  while (!departmentQueue.empty())
+    {
+
+      //this gets the department at the front of the queue
+      DepartmentNode* current = departmentQueue.front();
+
+      //This removes the department that was got from the queue
+      departmentQueue.pop();
+
+
+      //this will display the current department
+      cout << current->name << endl;
+
+
+      //this will add all childrens to the queue in insertion order
+      for(size_t i = 0; i < current->children.size(); ++i)
+        {
+
+          departmentQueue.push(current->children[i]);
+
+        }
+    }
+
+  
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function will start the level order traversal
+void DepartmentTree::LevelOrderTraversal() const
+{
+
+  //first one must check if the tree is empty (for what is a tree with no leaves, but a large stick)
+  if (root == nullptr)
+  {
+
+    cout << "Department tree is empty. " << endl;
+
+    return;
+  }
+
+  //tree not empty therefore call the level order traversal function that was foretold 59 lines ago 
+  LevelOrder(root);
+}
 //_________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
