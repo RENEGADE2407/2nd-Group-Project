@@ -246,10 +246,8 @@ int main(int argc, char* argv[])
           //**Level-order traversal**
           case 14:
             {
-
-              //NEEDS TO BE FILLED IN
+              departmentTree.LevelOrderTraversal();
               break;
-              
             }
 
           //**Department statistics**
