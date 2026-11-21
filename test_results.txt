@@ -361,6 +361,78 @@ Physics
     Actual:   data models has been successfully added to the department tree. (under College of Science)
     Result:   PASS
 
+  C-14 | Postorder traversal
+    Input:  Menu option 13
+    Expected: Display departments in postorder, visiting all children before their parents
+    Actual:
+Computer Science
+Electrical Engineering
+College of Engineering
+Mathematics
+Physics
+College of Science
+University
+    Result: PASS
+
+  C-15 | Level-order traversal
+    Input:  Menu option 14
+    Excpected: Display departments in level order, left to right followed by next level
+    Actual: 
+University
+College of Engineering
+College of Science
+Computer Science
+Electrical Engineering
+Mathematics
+Physics
+    Result: PASS
+
+  C-16 | Department tree statistics
+    Input:   Menu option 15
+    Excpected: Display the total departments, number of leaves, and tree height
+    Actual:
+Total departments: 7
+Leaf departments: 4
+Tree height: 2
+    Result: PASS
+
+  C-17 | Department statistics on an empty tree
+    Input:   Load empty department file, Menu option 15
+    Excpected: Display a clear message with total 0, leaves 0, and height shown as N/A. 
+    Actual:
+    Result:
+
+  C-18 | Department statistics on a root only tree
+    Input:   Load an empty department file, Add single node as root using menu option 9, then run menu option 15
+    Excpected: Total departments:1, Leaf departments: 1, Tree height: 0
+    Actual:
+    Result:
+
+  C-19 | Postorder traversal on an empty tree
+    Input:  Load an empty department file, then select menu option 13
+    Excpected: Display clear message indicating the department tree is empty
+    Actual:
+    Result:
+
+  C-20 | Level-order traversal on an empty tree
+    Input:  Load an empty department file, then select menu option 14
+    Excpected: Display a clear message indicating the department tree is empty
+    Actual:
+    Result:
+
+  C-21 | Postorder traversal on a root only tree
+    Input: Load an empty department file, add single node as root using menu option 9, then run menu option 13
+    Excpected: Display root
+    Actual:
+    Result:
+
+  C-22 | Level-order traversal on a root only tree
+    Input: Load an empty department file, add single node as root using menu option 9, then run menu option 14
+    Excpected: Display root
+    Actual:
+    Result:
+
+
 ==============================================================================
 SECTION S: SHARED - MENU AND INPUT HANDLING (whole team)
 ==============================================================================
