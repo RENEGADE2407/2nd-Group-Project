@@ -37,6 +37,15 @@ class DepartmentTree
       //determines depth of a department
       int GetDepth(DepartmentNode* node) const;
 
+      //counts all departments in the tree (used for case 15 department statistics)
+      int CountDepartments(DepartmentNode* node) const;
+
+      //Counts departments that have no children (used for case 15 department statistics)
+      int CountLeaves(DepartmentNode* node) const;
+
+      //Calculates the height of the department tree (used for case 15 department statistics)
+      int GetTreeHeight(DepartmentNode* node) const;
+
 
   public:
 
@@ -76,6 +85,9 @@ class DepartmentTree
 
       //Performs/Displays level order traversal
       void LevelOrderTraversal() const;
+
+      //Desplays department tree statistics (used for case 15 department statistics
+      void DisplayStatistics() const;
 
 };
 
