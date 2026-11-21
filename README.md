@@ -1,9 +1,9 @@
 # **Campus Information System**  
 
   
-This project is a simulation of a campus information system (CIS). The CIS is a c++ program that loads campus data from text files and uses a command line menu to allow the user to locate campus facilities, explore building connections, identify routes, peruse a department heiarchy, and inspect summary reports
+This project is a simulation of a campus information system (CIS). The CIS is a C++ program that loads campus data from text files and uses a command line menu to allow the user to locate campus facilities, explore building connections, identify routes, peruse a department heiarchy, and inspect summary reports
 
-The project uses object-oriented programming and data structures to organize/manage campus information. For example, a hash table is implemented to store and search facilities by ID and an undirected graph is used to represent campus buildings and walkways. Additionally a general tree is used to represent the academic department hierarchy, allowing departments to be added, organized, and displayed using preorder traversal.
+The project uses object-oriented programming and data structures to organize/manage campus information. For example, a hash table is implemented to store and search facilities by ID and an undirected graph is used to represent campus buildings and walkways. Additionally a general tree is used to represent the academic department hierarchy, allowing departments to be added, organized, and displayed using preorder traversal, Postorder traversal, Level-order traversal. It also has a feature that displays department statistics such as total departments, number of leaves, and tree height.
 
 **_Objectives_**
 -------------------------------------------------------------------------------------
@@ -11,18 +11,24 @@ The project uses object-oriented programming and data structures to organize/man
 *  Load campus info though instructor provided text files.
 *  Display a menu that allows the user to do the following:
    *  Display all campus facilities.
-   *  Search for facilities using ID.
+   *  Search for facilities using ID, name, and category.
    *  Display the campus graph.
    *  Display graph counts and degrees.
    *  Find reachable buildings using BFS.
+   *  Find shortest path using BFS.
    *  Add departments manually to the department tree.
    *  Search for departments.
+   *  Display department hierarchy.
+   *  Traverse department tree using preorder, postorder, and level-order.
+   *  Display department statistics.
+   *  Display facility category report.
+   *  Display graph connectivity report.
    *  Exit the system.
 *  Implement custom string hash function and hash table that stores and searches facilities using ID.
 *  Implement an undirected graph to represent campus buildings and their connections.
 *  Implement a BFS using a queue to find reachable buildings.
 *  Implement a general tree to represent the academic department hierarchy.
-   *  The tree operations will include insertion, searching, hierarchy display using indentation, and preorder traversal without indentation.
+   *  The tree operations will include insertion, searching, hierarchy display using indentation, preorder traversal without indentation, postorder traversal, level-order traversal, and calculating total departments, leaf departments, and tree height.
 *  Validate the input data text documents and handle invalid inputs from the user.
 
 **_Technologies / Tools Used_**
@@ -51,7 +57,7 @@ Project2/
 | |--CampusGraph.cpp
 | |--Facility.cpp
 | |--FacilityDatabase.cpp
-| L--Hashtable.cpp
+| L--HashTable.cpp
 |  
 |--data/  
 | |--buildings.txt  
@@ -66,7 +72,7 @@ Project2/
 | L L--connections.txt
 |  
 |
-|--README.txt  
+|--README.md  
 |--CONTRIBUTIONS.txt  
 |--design_document.txt  
 |--test_results.txt  
@@ -116,7 +122,10 @@ To load a different data directory, pass it as the first argument:
 6. Implement department insertion and search.
 7. Display department hierarchy using preorder with indentation.
 8. Use preorder traversal without indentation.
-9. Validate input data text files and manage invalid menu user inputs
+9. Use postorder traversal.
+10. Use level-order traversal using a queue.
+11. Display department statistics.
+12. Validate input data text files and manage invalid menu user inputs
 
 HASH FUNCTION AND COLLISION STRATEGY
 Hash function (custom, no std::hash): the facility ID is first trimmed and
@@ -139,7 +148,7 @@ The Campus Information System was implemented as a command-line C++ application.
 
 A custom hash table is used for facility lookup by ID. An undirected graph that represents campus building and the walkways connecting them, allows the user to determine which buildings are reachable using BFS.
 
-The department hierarchy is illustrated using a general tree, the user can add and search departments. Additionally the user can display the hierarchy with indentation or perform preorder traversal without indentation.
+The department hierarchy is illustrated using a general tree, the user can add and search departments. Additionally the user can display the hierarchy with indentation or perform preorder, postorder, and level-order traversal without indentation. The system also calculates department statistics including total number of departments, the number of leaf departments, and the overall tree height
 
 The system also includes input validation and file loading errors for invalid menu choices and duplicate entries 
 
