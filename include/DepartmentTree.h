@@ -28,6 +28,9 @@ class DepartmentTree
       //Traverses tree postorder style
       void Postorder(DepartmentNode* node) const;
 
+      //Traverses tree level order style
+      void LevelOrder(DepartmentNode* node) const;
+
       //recursively ldeletes nodes to free allocated memory
       void DeleteTree(DepartmentNode* node);
 
@@ -69,6 +72,10 @@ class DepartmentTree
 
       //Performs/Displays postorder traversal no indentation
       void PostorderTraversal() const;
+
+
+      //Performs/Displays level order traversal
+      void LevelOrderTraversal() const;
 
 };
 
