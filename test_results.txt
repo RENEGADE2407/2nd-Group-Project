@@ -376,7 +376,7 @@ University
 
   C-15 | Level-order traversal
     Input:  Menu option 14
-    Excpected: Display departments in level order, left to right followed by next level
+    Expected: Display departments in level order, left to right followed by next level
     Actual: 
 University
 College of Engineering
@@ -389,7 +389,7 @@ Physics
 
   C-16 | Department tree statistics
     Input:   Menu option 15
-    Excpected: Display the total departments, number of leaves, and tree height
+    Expected: Display the total departments, number of leaves, and tree height
     Actual:
 Total departments: 7
 Leaf departments: 4
@@ -398,7 +398,7 @@ Tree height: 2
 
   C-17 | Department statistics on an empty tree
     Input:   Load empty department file, Menu option 15
-    Excpected: Display a clear message with total 0, leaves 0, and height shown as N/A. 
+    Expected: Display a clear message with total 0, leaves 0, and height shown as N/A. 
     Actual:
 Total departments: 0
 Leaf departments: 0
@@ -407,7 +407,7 @@ Tree height: N/A
 
   C-18 | Department statistics on a root only tree
     Input:   Load an empty department file, Add single node as root using menu option 9, then run menu option 15
-    Excpected: Total departments:1, Leaf departments: 1, Tree height: 0
+    Expected: Total departments:1, Leaf departments: 1, Tree height: 0
     Actual:
 Total departments: 1
 Leaf departments: 1
@@ -416,25 +416,25 @@ Tree height: 0
 
   C-19 | Postorder traversal on an empty tree
     Input:  Load an empty department file, then select menu option 13
-    Excpected: Display clear message indicating the department tree is empty
+    Expected: Display clear message indicating the department tree is empty
     Actual: Department tree is empty.
     Result:  PASS
 
   C-20 | Level-order traversal on an empty tree
     Input:  Load an empty department file, then select menu option 14
-    Excpected: Display a clear message indicating the department tree is empty
+    Expected: Display a clear message indicating the department tree is empty
     Actual: Department tree is empty.
     Result:  PASS
 
   C-21 | Postorder traversal on a root only tree
     Input: Load an empty department file, add single node as root using menu option 9, then run menu option 13
-    Excpected: Display root
+    Expected: Display root
     Actual: University
     Result:  PASS
 
   C-22 | Level-order traversal on a root only tree
     Input: Load an empty department file, add single node as root using menu option 9, then run menu option 14
-    Excpected: Display root
+    Expected: Display root
     Actual: University
     Result:  PASS
 
