@@ -6,6 +6,7 @@
 using namespace std;
 
 // This header file will define the departmentTree class, which will manage the department hierarchy in the department tree
+//Author: Jason Wildman
 
 
 class DepartmentTree
@@ -24,11 +25,26 @@ class DepartmentTree
       //Traverses tree preorder style
       void Preorder(DepartmentNode* node) const;
 
+      //Traverses tree postorder style
+      void Postorder(DepartmentNode* node) const;
+
+      //Traverses tree level order style
+      void LevelOrder(DepartmentNode* node) const;
+
       //recursively ldeletes nodes to free allocated memory
       void DeleteTree(DepartmentNode* node);
 
       //determines depth of a department
       int GetDepth(DepartmentNode* node) const;
+
+      //counts all departments in the tree (used for case 15 department statistics)
+      int CountDepartments(DepartmentNode* node) const;
+
+      //Counts departments that have no children (used for case 15 department statistics)
+      int CountLeaves(DepartmentNode* node) const;
+
+      //Calculates the height of the department tree (used for case 15 department statistics)
+      int GetTreeHeight(DepartmentNode* node) const;
 
 
   public:
@@ -62,6 +78,16 @@ class DepartmentTree
 
       //Performs/Displays preorder traversal no indentation
       void PreorderTraversal() const;
+
+      //Performs/Displays postorder traversal no indentation
+      void PostorderTraversal() const;
+
+
+      //Performs/Displays level order traversal
+      void LevelOrderTraversal() const;
+
+      //Desplays department tree statistics (used for case 15 department statistics
+      void DisplayStatistics() const;
 
 };
 

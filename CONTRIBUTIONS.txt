@@ -1,6 +1,6 @@
 ==============================================================================
 CONTRIBUTIONS - Smart Campus Navigation and Facility Analytics System
-Milestone 1
+Final Submission
 ==============================================================================
 
 Team members (all are collaborators on the GitHub repository):
@@ -42,6 +42,9 @@ Member C - Department tree and preorder traversal
     * Department searching and then reporting parent, child count, and depth.
     * Hierarchy display using preorder traversal with four-space indentation for each level.
     * Preorder traversal without indentation.
+    * Postorder traversal using recursive child-first processing.
+    * Level-order traversal using a queue while preserving child insertion order.
+    * Department statistics, including total departments, leaf departments, and tree height.
     * Helper functions for whitespace removal, case normalization, and recursive tree cleanup.
   - Own tests: Section C of test_results.txt
 
@@ -51,13 +54,19 @@ Shared work
 
   - Menu and main.cpp (initialization, file-loading order, menu loop)
     * Primary implementation and organization by Member C.
-    * Member B and C integrated their individual modules as they became available. 
+    * Member B and A integrated their individual modules as they became available. 
   - Input handling for menu and prompts
-  - README.txt
+    * Menu handling split between all members for each individual module
+  - README.md
     * Primarily authored by Member C
   - design_document.txt test_results.txt, CONTRIBUTIONS.txt
+    * test_results.txt structure authored by Member B (Includes individual sections from each member)
+    * CONTRIBUTIONS.txt primarily authored by Member B
+    * design_document.txt structure by Member B (each individual section authored by the corresponding member)
   - .gitignore 
+    * authored by Member B
   - repository setup
     * Member C
   - Compiling and testing on the UNT CSE CELL machines
-  [Fill in who did which parts]
+    * Initial tests by member C
+    * Secondary testing by member B

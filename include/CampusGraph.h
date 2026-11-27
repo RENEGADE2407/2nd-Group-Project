@@ -27,6 +27,7 @@ public:
 
     // Getters
     int buildingCount() const;
+    string buildingName(int index) const;
     int connectionCount() const; 
     int degree(int index) const;
 

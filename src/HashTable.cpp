@@ -44,7 +44,7 @@ int HashTable::hashFunction(string id) const {
 bool HashTable::insert(const Facility& f) {
     Facility item = f;
     item.id = Utils::toUpper(Utils::trim(f.id));
-    int index = hashfunction(item.id);
+    int index = hashFunction(item.id);
 
     // It looks for a duplicate ID in this bucket
     HashNode* current = buckets[index];

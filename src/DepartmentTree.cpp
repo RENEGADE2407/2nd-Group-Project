@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cctype>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -523,6 +524,8 @@ void DepartmentTree::Preorder(DepartmentNode* node) const
   
 }
 
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
 
 //overloaded function that will start the process of the display/traversal
 void DepartmentTree::PreorderTraversal() const
@@ -542,6 +545,250 @@ void DepartmentTree::PreorderTraversal() const
 
 //_________________________________________________________________________________________________________________________________________________________________________________________________________
 
+
+//This will traverse and display the departments in postorder no indentation
+void DepartmentTree::Postorder(DepartmentNode* node) const
+{
+  //first we must check if node doth exist
+  if (node == nullptr)
+  {
+    return;
+  }
+
+  //this will visit each child recursively before displaying the parent
+  for (size_t i = 0; i < node->children.size(); ++i)
+    {
+      Postorder(node->children[i]);
+    }
+
+      //once all the childrens have been visited display the current department
+      cout << node->name << endl;
+      
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+//This funct will start the postorder traversal
+void DepartmentTree::PostorderTraversal() const
+{
+  //first check if tree is empty 
+  if (root == nullptr)
+  {
+    cout << "Department tree is empty." << endl;
+
+    return;
+  }
+
+  //this calls the recursivefunction to begin the postorder traversing
+  Postorder(root);
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+//Thiss will traverse/display the departments in level order
+void DepartmentTree::LevelOrder(DepartmentNode* node) const
+{
+
+  //First check if the node exists or not
+  if (node == nullptr)
+  {
+    return;
+  }
+
+  //This will create a queue to keep track of departments waiting to be visited
+  queue<DepartmentNode*> departmentQueue;
+
+
+  //this will add the starting department to the queue
+  departmentQueue.push(node);
+
+  //this will ensure loop Continues untl every department visited
+  while (!departmentQueue.empty())
+    {
+
+      //this gets the department at the front of the queue
+      DepartmentNode* current = departmentQueue.front();
+
+      //This removes the department that was got from the queue
+      departmentQueue.pop();
+
+
+      //this will display the current department
+      cout << current->name << endl;
+
+
+      //this will add all childrens to the queue in insertion order
+      for(size_t i = 0; i < current->children.size(); ++i)
+        {
+
+          departmentQueue.push(current->children[i]);
+
+        }
+    }
+
+  
+}
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function will start the level order traversal
+void DepartmentTree::LevelOrderTraversal() const
+{
+
+  //first one must check if the tree is empty (for what is a tree with no leaves, but a large stick)
+  if (root == nullptr)
+  {
+
+    cout << "Department tree is empty. " << endl;
+
+    return;
+  }
+
+  //tree not empty therefore call the level order traversal function that was foretold 59 lines ago 
+  LevelOrder(root);
+}
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function counts all departments in the tree
+int DepartmentTree::CountDepartments(DepartmentNode* node) const
+{
+
+  // one must first check if the node exists (i fear it wont be the last time we do this)
+  if(node == nullptr)
+  {
+    return 0;
+  }
+
+  //if it makes it past the 0 nodes check than there exists at least one node
+  int count = 1;
+
+  //this will visit each child and add its departments to thte total
+  for(size_t i = 0; i < node->children.size(); ++i)
+    {
+      count += CountDepartments(node->children[i]);
+    }
+
+  return count;
+  
+}
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function counts all leaf departments in the tree
+int DepartmentTree::CountLeaves(DepartmentNode* node) const
+{
+
+  //first check if there exists an node
+  if (node == nullptr)
+  {
+    return 0;
+  }
+
+  //if the department has no chitlings, it is a leaf therefore..
+  if (node->children.empty())
+  {
+
+    return 1;
+  }
+
+  //the following will perform the most necessary task of keeping track of the number of children
+  int count = 0;
+
+
+  //visit every child and count its leaves
+  for (size_t i = 0; i < node->children.size(); ++i)
+    {
+      count += CountLeaves(node->children[i]);
+    }
+
+  return count;
+  
+}
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function calculates the height of the department treee
+int DepartmentTree::GetTreeHeight(DepartmentNode* node) const
+{
+
+  //first one must check if the node doth exists 
+  if(node == nullptr)
+  {
+    return -1; //why return -1? elementary, my dear Watson! A leaf has no children, therfore its maxHeight remains -1
+  }
+
+  //one must keep track of the greatest height among the children
+  int maxHeight = -1;
+
+  //this will visit every child and determine which has the greatest height
+  for (size_t i = 0; i < node->children.size(); ++i)
+    {
+
+      int childHeight = GetTreeHeight(node->children[i]);
+
+      if(childHeight > maxHeight)
+      {
+        
+        maxHeight = childHeight;
+        
+      }
+
+      
+    }
+
+  //This will add one to the account for the edge connecting this node to its child
+  return maxHeight + 1;
+}
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+//This function combines the previous three functions into one glorious display for case 15 Department statistics
+void DepartmentTree::DisplayStatistics() const
+{
+
+  //FIRST STEP... check if tree empty, then display apropriate message 
+  if (root == nullptr)
+  {
+
+    cout << "Total departments: 0" << endl;
+    cout << "Leaf departments: 0" << endl;
+    cout << "Tree height: N/A "  << endl;
+
+    return;
+  }
+
+  //this Calculates the total num of departments by calling the CountDepartment funtion
+  int totalDepartments = CountDepartments(root);
+
+
+  //this calculates the number of leaf departments by calling the CountLeaves function;
+  int totalLeaves = CountLeaves(root);
+
+  //this calculates the height of the department tree by calling the GetTreeHeight function
+  int treeHeight = GetTreeHeight(root);
+
+
+  //now to display the results
+  cout << "Total departments: " << totalDepartments << endl;
+  cout << "Leaf departments: " << totalLeaves << endl;
+  cout << "Tree height: " << treeHeight << endl;
+
+
+  
+}
+
+
+//_________________________________________________________________________________________________________________________________________________________________________________________________________
 
 
 //this will check if tree empty, used when creating root to determine if parent prompt needed

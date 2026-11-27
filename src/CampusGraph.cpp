@@ -156,6 +156,17 @@ int CampusGraph::degree(int index) const {
     return static_cast<int>(adjacency_[index].size());
 }
 
+//Returns the name of a building using its index or returns an empty string if the index is invalid
+string CampusGraph::buildingName(int index) const
+{
+    if (index < 0 || index >= buildingCount())
+    {
+        return "";
+    }
+
+    return names_[index];
+}
+
 // Prints each building
 void CampusGraph::displayGraph() const {
     if (names_.empty()) {

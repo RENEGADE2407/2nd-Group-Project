@@ -7,7 +7,8 @@ Format: Test # | Description | Input | Expected | Actual | Pass/Fail
 Environment
   Tested on (Member B): Windows, g++ (MinGW), command prompt
   Build: g++ -std=c++11 -Wall -Wextra -Iinclude src/CampusGraph.cpp testdata/graph_demo.cpp -o graph_demo
-  UNT CSE CELL: [ ] NOT YET RUN - fill in date, compiler version, and result
+  UNT CSE CELL: [CELL13-CSE.ENG.UNT.EDU] 07/11/2026
+  Build: g++ -std=c++11 -Wall -Wextra -Iinclude src/*.cpp -o campus
 
 ==============================================================================
 SECTION B: CAMPUS GRAPH, BFS, AND BUILDINGS/CONNECTIONS LOADING (Member B)
@@ -128,44 +129,122 @@ B-14 | Empty graph display (no buildings loaded)
             Total buildings: 0 / Total connections: 0
   Result:   PASS
 
-
-------------------------------------------------------------------------------
-PENDING (need the team main.cpp / menu)
-------------------------------------------------------------------------------
-
 B-15 | BFS blank name through the menu
   Input:    Menu option 5, press Enter with no text
-  Expected: Error message; return to menu
-  Actual:   [ ] not yet run
-  Result:   [ ]
+  Expected: Error message, return to menu
+  Actual:   Error: building name cannot be blank. returns to menu
+  Result:   PASS
 
 B-16 | Building name with spaces through the menu
   Input:    Menu option 5, enter: Student Union
   Expected: BFS runs from Student Union (distance 0); 6 of 7
-  Actual:   [ ] not yet run
-  Result:   [ ]
+  Actual:   Reachable: 6 of 7 buildings
+  Result:   PASS
 
 B-17 | Repeated operations after errors (via menu)
   Input:    Enter an unknown building, then run option 4, then option 5 again
   Expected: Menu keeps working after each error
-  Actual:   [ ] not yet run
-  Result:   [ ]
+  Actual:   Menu keeps working after each error
+  Result:   PASS
 
 
 ==============================================================================
 SECTION A: FACILITIES, HASH TABLE, ID SEARCH (Member A)
 ==============================================================================
-Required M1 tests (Section 10)
-  - Valid facility records, blank lines, comment lines, too few/many fields
-  - Duplicate facility IDs that differ only by capitalization
-  - Unknown building reference in facilities.txt
-  - Successful ID search, lowercase ID search (f004), invalid-format ID (004),
-    and not-found ID (F999)
-  - At least one hash collision using your own testdata/ folder, with the
-    HASH-7 diagnostic output (capacity, entries, collisions)
-  - A duplicate-key insertion attempt, confirming it does NOT change the
-    collision count
-  - View all facilities (file order, total shown, and the empty case)
+A-01 | Sample facilities load with hash diagnostic
+  Input:    ./campus
+  Expected: 10 accepted, 0 rejected; capacity, entries, collisions printed
+  Actual:   facilities.txt: 10 accepted, 0 rejected
+            (hash capacity 13, entries 10, collisions 1)
+  Result:   PASS
+ 
+A-02 | View all facilities (file order, total)
+  Input:    menu 1 (sample data)
+  Expected: 10 facilities in facilities.txt order, then the total
+  Actual:   F001 | Main Reading Room | Library | Library ... through F010,
+            then "Total facilities: 10"
+  Result:   PASS
+ 
+A-03 | ID search, found
+  Input:    menu 2, F004
+  Expected: Found: Computer Lab A | Science Building | Computer Lab
+  Actual:   Found: F004 | Computer Lab A | Science Building | Computer Lab
+  Result:   PASS
+ 
+A-04 | ID search, lowercase input
+  Input:    menu 2, f004
+  Expected: Same result as F004
+  Actual:   Found: F004 | Computer Lab A | Science Building | Computer Lab
+  Result:   PASS
+ 
+A-05 | ID search, invalid format
+  Input:    menu 2, 004
+  Expected: Invalid-format message (F plus exactly three digits)
+  Actual:   Invalid format: '004'. An ID is F followed by exactly three digits
+            (for example, F001).
+  Result:   PASS
+ 
+A-06 | ID search, valid but not found
+  Input:    menu 2, F999
+  Expected: Not-found message showing the normalized ID
+  Actual:   Not found: no facility with ID F999.
+  Result:   PASS
+ 
+A-07 | Hash collision with own test data (HASH-7 diagnostic)
+  Input:    ./campus testdata/hash_collision
+            (F006, F011, f029 all hash to bucket 0 at capacity 13)
+  Expected: collisions 2 (second and third insertions land in a used bucket)
+  Actual:   facilities.txt: 4 accepted, 1 rejected
+            (hash capacity 13, entries 4, collisions 2)
+  Result:   PASS
+ 
+A-08 | Duplicate-key insertion does not change the collision count
+  Input:    same run as A-07; line 5 repeats F011
+  Expected: Duplicate rejected, first record kept, collisions stays 2
+  Actual:   Warning: facilities.txt line 5: rejected - duplicate ID 'F011'
+            (first record kept); final collisions 2 (not 3)
+  Result:   PASS
+ 
+A-09 | Lowercase ID and building in a data file are normalized
+  Input:    ./campus testdata/hash_collision, menu 2, f029
+            (data line: f029|Quiet Room|library|Library)
+  Expected: Stored as F029; building spelling from buildings.txt
+  Actual:   Found: F029 | Quiet Room | Library | Library
+  Result:   PASS
+ 
+A-10 | Facilities file bad records
+  Input:    ./campus testdata/loader_edge_cases (file uses Windows CRLF)
+  Expected: Blank and comment lines skipped; duplicate ID (same case and
+            different case), unknown building, too few and too many fields,
+            empty field, and invalid IDs rejected with file, line, reason;
+            lowercase ID accepted; "#" inside a name kept; spaces trimmed
+  Actual:   line 5 duplicate ID 'F001' (first record kept)
+            line 6 duplicate ID 'F001' (first record kept)   [was f001]
+            line 7 unknown building 'Nowhere Hall'
+            line 8 wrong number of fields
+            line 9 wrong number of fields
+            line 10 a required field is empty
+            line 11 invalid ID 'F12' (must be F followed by exactly three digits)
+            line 12 invalid ID 'G007' (must be F followed by exactly three digits)
+            facilities.txt: 3 accepted, 8 rejected (... entries 3, collisions 0)
+            View all: F001, F002 (from f002|...|library), F008 | Room #5 | Gym | Recreation
+  Result:   PASS
+ 
+A-11 | Missing facilities file / empty facility list
+  Input:    ./campus nonexistent, then menu 1
+  Expected: Error naming the file, treated as empty, no crash; clear message
+  Actual:   Error: can not open file facilities.txt (nonexistent/facilities.txt).
+            Treating it as empty.
+            facilities.txt: 0 accepted, 0 rejected (hash capacity 13, entries 0,
+            collisions 0)   /   No facilities are loaded.
+  Result:   PASS
+ 
+A-12 | Blank facility ID search
+  Input:    menu 2, (blank)
+  Expected: Error, return to menu
+  Actual:   Invalid format: ''. An ID is F followed by exactly three digits
+            (for example, F001).
+  Result:   PASS
 
 ==============================================================================
 SECTION C: DEPARTMENT TREE (Member C)
@@ -282,14 +361,189 @@ Physics
     Actual:   data models has been successfully added to the department tree. (under College of Science)
     Result:   PASS
 
+  C-14 | Postorder traversal
+    Input:  Menu option 13
+    Expected: Display departments in postorder, visiting all children before their parents
+    Actual:
+Computer Science
+Electrical Engineering
+College of Engineering
+Mathematics
+Physics
+College of Science
+University
+    Result: PASS
+
+  C-15 | Level-order traversal
+    Input:  Menu option 14
+    Expected: Display departments in level order, left to right followed by next level
+    Actual: 
+University
+College of Engineering
+College of Science
+Computer Science
+Electrical Engineering
+Mathematics
+Physics
+    Result: PASS
+
+  C-16 | Department tree statistics
+    Input:   Menu option 15
+    Expected: Display the total departments, number of leaves, and tree height
+    Actual:
+Total departments: 7
+Leaf departments: 4
+Tree height: 2
+    Result: PASS
+
+  C-17 | Department statistics on an empty tree
+    Input:   Load empty department file, Menu option 15
+    Expected: Display a clear message with total 0, leaves 0, and height shown as N/A. 
+    Actual:
+Total departments: 0
+Leaf departments: 0
+Tree height: N/A
+    Result:  PASS
+
+  C-18 | Department statistics on a root only tree
+    Input:   Load an empty department file, Add single node as root using menu option 9, then run menu option 15
+    Expected: Total departments:1, Leaf departments: 1, Tree height: 0
+    Actual:
+Total departments: 1
+Leaf departments: 1
+Tree height: 0
+    Result:  PASS
+
+  C-19 | Postorder traversal on an empty tree
+    Input:  Load an empty department file, then select menu option 13
+    Expected: Display clear message indicating the department tree is empty
+    Actual: Department tree is empty.
+    Result:  PASS
+
+  C-20 | Level-order traversal on an empty tree
+    Input:  Load an empty department file, then select menu option 14
+    Expected: Display a clear message indicating the department tree is empty
+    Actual: Department tree is empty.
+    Result:  PASS
+
+  C-21 | Postorder traversal on a root only tree
+    Input: Load an empty department file, add single node as root using menu option 9, then run menu option 13
+    Expected: Display root
+    Actual: University
+    Result:  PASS
+
+  C-22 | Level-order traversal on a root only tree
+    Input: Load an empty department file, add single node as root using menu option 9, then run menu option 14
+    Expected: Display root
+    Actual: University
+    Result:  PASS
+
+
+
+Teammate Module Code Review – graph
+Reviewer: Jason Wildman (Member C)
+Module Reviewed: Campus Building Graph
+Files Reviewed: 
+src/CampusGraph.cpp
+include/CampusGraph.h
+
+Review Summary and Findings
+addBuilding() fucntion
+•	properly stores building names inside names_ vector using vector<string>
+•	uses adjacency list (vector<vector<int>>) to store building connections by indexe, by using a vector inside a vector his code is capable of storing buildings with multiple connections easily
+•	Properly removes leading/trailing blank space, and checks for empty/duplicate building names
+•	 Uses push_back() to add building name and create empty adjacency list for new building
+
+addConnection()
+•	function obtains index of 2 buildings by calling findBuilding() function
+•	properly checks to ensure both buildings exist before establishing connection
+•	 prevents self connections using if statement that checks if both building indexes are equivilant
+•	  prevents duplicate connections by looping though first buildings adjacency  list and checking if other buildings index (ib) already exists
+•	Properly establishes connestion using push_back() to add each buildings index to the others adjacency list, which maintains undirected graph structure.
+
+degree() 
+•	function receives building index in names_ vector and accesses buildings adjacency list using adjacency_[index]
+•	properly counts neighboring buildings using .size() and converts result to int using static_cast<int>()
+displayCountAndDegrees()
+•	properly checks whether any building exist using if statement and checking names_.empty()
+•	properly displays total buildings using names_.size()
+•	properly displays total connections using edgeCount_
+
+runBfs()
+•	uses struct from header file BfsResult{} which stores order building are visited and distance  (how many connections away each building is from starting building)
+•	properly initializes starting building to 0 and adds it to the queue
+•	uses while loop to continue looping until no more buildings in queue
+  •	inside while loop retrieves next building index using int current = q.front()
+  •	removes that building from the queue using q.pop()
+  •	adds the building just removed to visit order using result.order.push_back(current)
+•	Properly uses for loop to loop though buildings connections and get neighboring buildings using int next = adjacency_[current][i]
+•	while still inside for loop properly checks whether neighbor has already been visited, and calculates the distance using result.distance[current] + 1
+•	properly returns result of BFS structure
+
+bfsreachable()
+•	finds starting building using findBuilding(), and checks if it exists 
+•	properly runs a BFS traversal by calling runBfs(start)
+•	properly displays result using for loop 
+
+displayGraph()
+•	properly checks if buildings have been loaded using if statement and checking names_.empty()
+•	uses for loop to loop though every building in names_ and prints every buildings name
+•	uses if statement to check if adjacency list is empty and prints appropriate message if it is
+•	if not empty it loops though its neighbors and prints their names
+
+
+
+
 ==============================================================================
 SECTION S: SHARED - MENU AND INPUT HANDLING (whole team)
 ==============================================================================
 Required M1 tests:
-  - Invalid menu input: blank, letters, out-of-range number
-  - Text typed at a numeric prompt (program recovers, does not loop forever)
-  - Names containing spaces at every name prompt
-  - Blank names at every name prompt (error, return to menu)
-  - Repeated operations after errors (menu keeps working)
-  - Option 0 exits cleanly
-  - Menu numbers match Section 6.9 exactly (M1 menu)
+S-1 | Invalid menu input: blank
+  Input: " "
+  Expected: Error message, Print menu
+  Actual: "Invalid input please try again." Print menu
+  Result: PASS
+
+S-2 | Invalid menu input: letters
+  Input: abc
+  Expected: Error message. Print menu
+  Actual: "Invalid input please try again." | Print menu
+  Result: Pass
+
+S-3 | Invalid menu input: out of range
+  Input: -1
+  Expected: Error message. Print menu
+  Actual: Invalid input please try again." | Print menu
+  Result: PASS
+
+S-4 | - Text typed at a numeric prompt
+  Input: menu choice 2, FFFF
+  Expected: Error message, Return to menu
+  Actual: Invalid format: 'FFFF'. An ID is F followed by exactly three digits (for example, F001). | Return to menu
+  Result: PASS
+
+S-5 | Names containing spaces at every name prompt
+  Input: menu option 5, Student Union | menu option 6, Computer Engineering | menu option 7, Computer Science
+  Expected: Display reachable buildings | Add new department | Search department
+  Actual: Reachable: 6 of 7 buildings | Computer Engingeering has been successfully added to the department tree.
+  |----Department found---- Department Name: Computer Science
+  Result : PASS
+
+S-6 | Blank names at every name prompt
+  Input: menu 5, " " | menu 6, " ", " " | menu 7, " "
+  Expected: error, return to menu
+  Actual: Error: building name cannot be blank. , return to menu | WARNING: Department name empty. , return to menu 
+  | WARNING:  department not found. , return to menu
+  Result: PASS
+
+S-7 | Repeated operations after errors 
+  Input: blank input, letters, out of range number
+  Expected: Menu displays error, continues working
+  Actual: Menu displays error, continues working
+  Result: PASS
+
+S-8 | Option 0 exits cleanly
+  Input: 0
+  Expected: "Thank you for using the Campus Information System. Goodbye!"
+  Actual: "Thank you for using the Campus Information System. Goodbye!"
+  Result: PASS

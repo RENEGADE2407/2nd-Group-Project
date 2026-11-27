@@ -1,0 +1,135 @@
+==============================================================================
+DESIGN DOCUMENT - Campus Information System (Final)
+==============================================================================
+
+MAIN CLASSES AND MODULES
+- Facility / HashTable (Member A): facility records and the custom ID hash table.
+- CampusGraph (Member B): undirected campus graph, buildings/connections
+  loading, display, and BFS reachability.
+- DepartmentNode / DepartmentTree (Member C): general department tree,
+  department insertion and searching, hierarchy display, preorder, postorder,
+  and level-order traversals, and department statistics.
+- Utils.h (Member B): trim, case-insensitive compare, comment and field helpers.
+- main.cpp: initialization, file loading order, and the menu loop only.
+
+------------------------------------------------------------------------------
+1. HASH TABLE (Member A)
+------------------------------------------------------------------------------
+Hash function: the ID is trimmed and uppercased BEFORE hashing, so F004 and
+f004 reach the same bucket. Then h = 0 and, for each character c,
+h = (h * 31 + c) mod capacity. The result is a valid index in [0, capacity-1].
+No std::hash or library container is used.
+ 
+Collision strategy: separate chaining (each bucket is a singly linked list;
+new nodes are appended at the end). It was chosen because chains grow as
+needed, so there is no fixed limit on the number of facilities and the table
+cannot become full (the recommended strategy in HASH-5).
+ 
+Collision counting: one collision is counted each time an ACCEPTED insertion
+lands in a bucket that is already non-empty. A rejected duplicate ID is
+detected before counting, so it does not change the collision count.
+ 
+Capacity and full-table behavior: initial capacity 13, set by the constant
+DEFAULT_CAPACITY (and the HashTable constructor parameter). The table does
+not resize. Because of chaining it never becomes full, so no insertion is
+rejected for lack of space.
+ 
+Lookup: find() uppercases the ID, hashes it, and searches only that bucket's
+chain (no scan of all facilities). FacilityDatabase also keeps a vector of
+facilities in file order for "view all". Records are validated in this order:
+field count, empty fields, ID format (F plus three digits), unknown building,
+duplicate ID. The building spelling from buildings.txt is stored.
+ 
+Collision demonstration: with capacity 13, F005 and F010 collide in the
+sample data (1 collision). testdata/hash_collision/ loads F006, F011 and F029,
+which all hash to bucket 0 (2 collisions), plus a duplicate F011 that is
+rejected without changing the count.
+
+------------------------------------------------------------------------------
+2. CAMPUS GRAPH (Member B)
+------------------------------------------------------------------------------
+Representation: an ADJACENCY LIST. CampusGraph keeps a vector of building
+names (display spelling from buildings.txt, in file order) and a parallel
+vector of neighbor lists, where each list holds the indices of adjacent
+buildings in the order the connections were accepted.
+
+Why an adjacency list: the campus graph is sparse (few walkways compared with
+the possible pairs), so a list uses less memory than a matrix. It grows
+dynamically (no fixed-size arrays), and appending neighbors naturally keeps
+connection order, which matters because BFS order depends on it. Neighbors
+are never sorted.
+
+Edges: an undirected connection is stored at BOTH endpoints but counted once
+in connectionCount. Checking one endpoint's list is enough to reject both a
+duplicate (A|B, A|B) and a reversed duplicate (A|B, B|A).
+
+Name matching: building names are trimmed and compared ignoring ASCII case;
+internal spaces are preserved. The spelling from the first accepted record in
+buildings.txt is used everywhere.
+
+Loading and validation (buildings.txt, connections.txt): lines are read whole
+with getline; blank lines and lines whose first non-whitespace character is #
+are skipped; fields are split on | and trimmed (this also removes a Windows
+\r). Records are rejected, with a warning showing filename, line number, and
+reason, for wrong field count, empty field, duplicate building (any
+capitalization), unknown building, self-connection, and duplicate or reversed
+connection. A missing file prints an error and is treated as empty. One load
+summary line (accepted/rejected counts) is printed per file.
+
+BFS reachability: a queue and a distance array that doubles as the visited
+structure (-1 means not visited). A building is marked visited when it is
+ENQUEUED, not when dequeued, so it can never be added twice. The start has
+distance 0 and counts as reachable. Output lists buildings in visit order with
+distances, then "Reachable: N of total". An unknown start prints an error and
+returns to the menu; an isolated start shows only itself. The same graph and
+BFS routine are reused by display and statistics.
+
+------------------------------------------------------------------------------
+3. DEPARTMENT TREE (Member C)
+------------------------------------------------------------------------------
+Representation: A GENERAL TREE. Each department node stores the department name,
+a pointer to its parent, and a vector of pointers to its children. By using a vector of 
+child pointers it allows each departmet to have any number of subdepartments.
+
+Why a general tree: the tree is complementary to the project because it allows for 
+a department hierarchy with a parent/child structure. Each department can have multiple sub
+-departments. The general tree allows the relationships to be represented without limiting
+the number of children each department can have.
+
+Loading and validation (departments.txt): each line is read using getline. Blank lines and comment lines are skipped
+and the fields are separated using |. Department names and parent names are trimmed before they are processed. 
+The first valid department is used as the root of the tree, and every following department
+is added under the specified parent. Invalid records (duplicate names or non-existent parents)
+are rejected, and a warning is displayed. A summary of the accepted and rejected departments is 
+also displayed.
+
+Displaying hierarchy: Each department is displayed using recursive preorder traversal. Each 
+department is displayed before its children with indentation to show the relationships.
+
+Tree traversals: 
+  Preorder traversal: Uses recursion to visit each department before visiting its children.
+  Departments are displayed without indentation.
+
+  Postorder traversal: uses recursion to visit all children before displaying their parent department.
+
+  Level-order traversal: uses a queue to visit departments level by level, starting with the root.
+  children are then added to the queue in their insertion order, which preserves the order in which they were added.
+
+Department statistics: Total departments are calculated recursively by counting each node in the tree.
+Leaf departments are counted by identifying nodes that have no children. Tree height is calculated by finding the longest
+path from the root to a leaf, empty tree shows N/A for height.
+
+Memory management: when  department nodes are created they are dynamically allocated.
+the destructor recursively deletes every child before deleting the parent node. This ensures
+that all dynamically allocated memory is properly deleted.
+
+
+------------------------------------------------------------------------------
+4. MAIN PROGRAM
+------------------------------------------------------------------------------
+main.cpp only coordinates: it reads the optional data-directory argument
+(default data/), loads the files in the required order (buildings,
+connections, facilities, departments), and runs the repeating menu. Menu
+choices are read as whole lines so blank input, letters, and out-of-range
+numbers produce an error and recover without looping forever. Names are read
+with getline so they may contain spaces.
