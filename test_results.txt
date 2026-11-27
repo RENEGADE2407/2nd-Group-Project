@@ -439,6 +439,61 @@ Tree height: 0
     Result:  PASS
 
 
+
+Teammate Module Code Review – graph
+Reviewer: Jason Wildman (Member C)
+Module Reviewed: Campus Building Graph
+Files Reviewed: 
+src/CampusGraph.cpp
+include/CampusGraph.h
+
+Review Summary and Findings
+addBuilding() fucntion
+•	properly stores building names inside names_ vector using vector<string>
+•	uses adjacency list (vector<vector<int>>) to store building connections by indexe, by using a vector inside a vector his code is capable of storing buildings with multiple connections easily
+•	Properly removes leading/trailing blank space, and checks for empty/duplicate building names
+•	 Uses push_back() to add building name and create empty adjacency list for new building
+
+addConnection()
+•	function obtains index of 2 buildings by calling findBuilding() function
+•	properly checks to ensure both buildings exist before establishing connection
+•	 prevents self connections using if statement that checks if both building indexes are equivilant
+•	  prevents duplicate connections by looping though first buildings adjacency  list and checking if other buildings index (ib) already exists
+•	Properly establishes connestion using push_back() to add each buildings index to the others adjacency list, which maintains undirected graph structure.
+
+degree() 
+•	function receives building index in names_ vector and accesses buildings adjacency list using adjacency_[index]
+•	properly counts neighboring buildings using .size() and converts result to int using static_cast<int>()
+displayCountAndDegrees()
+•	properly checks whether any building exist using if statement and checking names_.empty()
+•	properly displays total buildings using names_.size()
+•	properly displays total connections using edgeCount_
+
+runBfs()
+•	uses struct from header file BfsResult{} which stores order building are visited and distance  (how many connections away each building is from starting building)
+•	properly initializes starting building to 0 and adds it to the queue
+•	uses while loop to continue looping until no more buildings in queue
+  •	inside while loop retrieves next building index using int current = q.front()
+  •	removes that building from the queue using q.pop()
+  •	adds the building just removed to visit order using result.order.push_back(current)
+•	Properly uses for loop to loop though buildings connections and get neighboring buildings using int next = adjacency_[current][i]
+•	while still inside for loop properly checks whether neighbor has already been visited, and calculates the distance using result.distance[current] + 1
+•	properly returns result of BFS structure
+
+bfsreachable()
+•	finds starting building using findBuilding(), and checks if it exists 
+•	properly runs a BFS traversal by calling runBfs(start)
+•	properly displays result using for loop 
+
+displayGraph()
+•	properly checks if buildings have been loaded using if statement and checking names_.empty()
+•	uses for loop to loop though every building in names_ and prints every buildings name
+•	uses if statement to check if adjacency list is empty and prints appropriate message if it is
+•	if not empty it loops though its neighbors and prints their names
+
+
+
+
 ==============================================================================
 SECTION S: SHARED - MENU AND INPUT HANDLING (whole team)
 ==============================================================================
