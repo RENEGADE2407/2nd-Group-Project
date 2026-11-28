@@ -180,4 +180,10 @@ void FacilityDatabase::categoryReport() const {
         }
     }
 
-    
+    int total = (int)facilities.size();   // its never 0 here so there is no divide by 0
+    cout << "Category | Count | Percentage" << endl;
+    cout << fixed << setprecision(1);
+    for (int i = 0; i < (int)categoryNames.size(); i++) {
+        double percent = 100.0 * categoryCounts[i] / total;
+        cout << categoryNames[i] << " | " << categoryCounts[i] << " | " << percent << "%" << endl;
+    }
