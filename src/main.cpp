@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
       cout << "15. Department statistics" <<                 endl;
       cout << "16. Facility category report" <<              endl;
       cout << "17. Graph connectivity report" <<             endl;
-      cout << "18. Exit" <<                                  endl;
+      cout << "0. Exit" <<                                  endl;
       
 
       cout << endl;
