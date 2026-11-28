@@ -162,3 +162,14 @@ void FacilityDatabase::categoryReport() const {
         cout << "Total facilities: 0" << endl;
         return;
     }
+    
+    vector<string> categoryNames;   // first known spelling of each category
+    vector<int> categoryCounts;     // how many facilities are in each category
+    for (int i = 0; i < (int)facilities.size(); i++) {
+        int found = -1;
+        for (int j = 0; j < (int)categoryNames.size(); j++) {
+            if (Utils::equalsIgnoreCase(categoryNames[j], facilities[i].category)) {
+                found = j;
+            }
+        }
+    
