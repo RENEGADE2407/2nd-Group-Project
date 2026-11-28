@@ -133,17 +133,21 @@ int main(int argc, char* argv[])
           //**Search facility by name**
           case 3:
             {
-              
-              //NEEDS TO BE FILLED IN 
+              cout << "Enter facility name: ";
+              string name;
+              getline(cin, name);
+              facilities.searchByName(name)
               break;
-              
-            }
+              }
 
           //**Search facility by category**
           case 4:
             {
-
-              //NEEDS TO BE FILLED IN
+              cout << "Enter category: ";
+              string category;
+              getline(cin, category);
+              facilities.searchByCategory(category);
+              
               break;
               
             }
@@ -260,8 +264,8 @@ int main(int argc, char* argv[])
           //**Facility category report**
           case 16:
             {
-
-              //NEEDS TO BE FILLED IN
+              facilities.categoryReport();
+              
               break;
               
             }
