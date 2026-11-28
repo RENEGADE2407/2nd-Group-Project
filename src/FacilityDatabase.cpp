@@ -143,3 +143,11 @@ void FacilityDatabase::searchByName(string name) const {
         cout << "Error: facility name cannot be blank." << endl;
         return;
     }
+    int matches = 0;
+    for (int i = 0; i < (int)facilities.size(); i++) {
+        if (Utils::equalsIgnoreCase(facilities[i].name, name)) {
+            cout << facilities[i].toString() << endl;
+            matches++;
+        }
+    }
+    
