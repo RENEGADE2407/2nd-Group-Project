@@ -172,4 +172,12 @@ void FacilityDatabase::categoryReport() const {
                 found = j;
             }
         }
+        if (found == -1) {
+            categoryNames.push_back(facilities[i].category);
+            categoryCounts.push_back(1);
+        } else {
+            categoryCounts[found]++;
+        }
+    }
+
     
