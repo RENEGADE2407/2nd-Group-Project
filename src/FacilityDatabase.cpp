@@ -187,3 +187,7 @@ void FacilityDatabase::categoryReport() const {
         double percent = 100.0 * categoryCounts[i] / total;
         cout << categoryNames[i] << " | " << categoryCounts[i] << " | " << percent << "%" << endl;
     }
+    cout << "Total | " << total << " | 100.0%" << endl;
+    cout.unsetf(ios::floatfield);
+    cout.precision(6);
+}
