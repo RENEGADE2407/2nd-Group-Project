@@ -155,3 +155,10 @@ void FacilityDatabase::searchByName(string name) const {
     }
     cout << "Matches: " << matches << endl;
 }
+// counts facilities per category
+void FacilityDatabase::categoryReport() const {
+    if (facilities.empty()) {
+        cout << "No facilities are available for the category report." << endl;
+        cout << "Total facilities: 0" << endl;
+        return;
+    }
