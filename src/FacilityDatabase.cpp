@@ -150,4 +150,8 @@ void FacilityDatabase::searchByName(string name) const {
             matches++;
         }
     }
-    
+    if (matches == 0) {
+        cout << "No facilities found in the category '" << category << "'." << endl;
+    }
+    cout << "Matches: " << matches << endl;
+}
