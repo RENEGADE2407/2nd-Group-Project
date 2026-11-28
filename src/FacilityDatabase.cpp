@@ -4,6 +4,7 @@
 #include "Utils.h"
 #include <fstream>
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 // Facility ID validation function
@@ -135,3 +136,10 @@ void FacilityDatabase::searchById(string id) const {
         cout << "Found: " << result->toString() << endl;
     }
 }
+
+void FacilityDatabase::searchByName(string name) const {
+    name = Utils::trim(name);
+    if (name.empty()) {
+        cout << "Error: facility name cannot be blank." << endl;
+        return;
+    }
